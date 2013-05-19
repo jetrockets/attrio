@@ -16,4 +16,12 @@ Gem::Specification.new do |gem|
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
+
+  spec.add_development_dependency 'rspec'
+  spec.add_development_dependency 'webmock', '~> 1.9.0'
+  spec.add_development_dependency 'simplecov'
+  spec.add_development_dependency 'coveralls', :require => false
+  spec.add_development_dependency 'rake'
+  spec.add_development_dependency 'bundler'
+  spec.add_development_dependency "rake"
 end
