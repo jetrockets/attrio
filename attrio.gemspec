@@ -2,11 +2,11 @@
 
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'wiseattr/version'
+require 'attrio/version'
 
 Gem::Specification.new do |gem|
-  gem.name          = "wiseattr"
-  gem.version       = Attrio::VERSION::STRING
+  gem.name          = "attrio"
+  gem.version       = Attrio::Version::STRING
   gem.authors       = ['Igor Alexandrov', 'Julia Egorova']  
   gem.email         = 'hello@jetrockets.ru'
   gem.summary       = "Attributes for Plain Old Ruby Objects"
