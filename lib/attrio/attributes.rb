@@ -1,7 +1,7 @@
 # encoding: utf-8
 
-module Wiseattr
-  class AttributesBuilder
+module Attrio
+  class Attributes
     attr_reader :klass, :options
 
     def initialize(object, options, &block)
@@ -21,8 +21,8 @@ module Wiseattr
       casted_type = self.class.cast_type(type)
       self.class.const_missing(type.to_s) if casted_type.blank?
 
-      reader_builder = Wiseattr::Attributes::ReaderBuilder.new(@object, attribute_name, casted_type, options)
-      writer_builder = Wiseattr::Attributes::WriterBuilder.new(@object, attribute_name, casted_type, options)
+      reader_builder = Attrio::Builders::ReaderBuilder.new(@object, attribute_name, casted_type, options)
+      writer_builder = Attrio::Builders::WriterBuilder.new(@object, attribute_name, casted_type, options)
       self.add_attribute(attribute_name, reader_builder, writer_builder)
 
       reader_builder.define_method.define_aliases
@@ -30,14 +30,14 @@ module Wiseattr
     end
 
     def self.cast_type(constant)
-      return constant if constant.is_a?(Class) && constant < Wiseattr::Attributes::Types::Base
+      return constant if constant.is_a?(Class) && constant < Attrio::Types::Base
 
       string = constant.to_s
       string = string.camelize if (string =~ /\w_\w/ || string[0].downcase == string[0])
       
       begin
-        if Wiseattr::Attributes::Types.const_defined?(string) 
-          return Wiseattr::Attributes::Types.const_get(string)
+        if Attrio::Types.const_defined?(string) 
+          return Attrio::Types.const_get(string)
         elsif Module.const_defined?(string)
           return Module.const_get(string)    
         else

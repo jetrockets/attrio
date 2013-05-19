@@ -1,9 +1,9 @@
 # encoding: utf-8
 
-require 'wiseattr/attributes/accessor_builder'
+require 'attrio/attributes/accessor_builder'
 
-module Wiseattr
-  module Attributes
+module Attrio
+  module Builders
     class ReaderBuilder < AccessorBuilder
 
       def accessor

@@ -1,7 +1,7 @@
 # encoding: utf-8
 
-module Wiseattr
-  module Attributes
+module Attrio
+  module Builders
     class AccessorBuilder
 
       attr_reader :object, :attribute_name, :type, :options

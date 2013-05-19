@@ -1,10 +1,8 @@
 # encoding: utf-8
+
 require 'wiseattr/version'
 
-module Wiseattr
-  autoload :AttributesBuilder, 'wiseattr/attributes_builder'
-  autoload :Attributes, 'wiseattr/attributes' 
-
+module Attrio
   class << self
     def define_attributes(options = {}, &block)
       options[:as] ||= :attributes
@@ -37,11 +35,29 @@ module Wiseattr
         
       end
 
-      Wiseattr::AttributesBuilder.new(self, options, &block)
+      Attrio::Attributes.new(self, options, &block)
     end
 
     def const_missing(name)
-      Wiseattr::AttributesBuilder.cast_type(name) || super
+      Attrio::Attributes.cast_type(name) || super
     end
+  end
+
+  autoload :Attributes, 'attrio/attributes'    
+
+  module Builders    
+    autoload :ReaderBuilder, 'attrio/builders/reader_builder'
+    autoload :WriterBuilder, 'attrio/builders/writer_builder'
+  end
+
+  module Types
+    autoload :Base, 'attrio/types/base'
+    autoload :Boolean, 'attrio/types/boolean'
+    autoload :Date, 'attrio/types/date'
+    autoload :DateTime, 'attrio/types/date_time'
+    autoload :Float, 'attrio/types/float'
+    autoload :Integer, 'attrio/types/integer'
+    autoload :Symbol, 'attrio/types/symbol'
+    autoload :Time, 'attrio/types/time'
   end
 end
