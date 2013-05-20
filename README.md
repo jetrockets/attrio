@@ -1,7 +1,7 @@
-[![Build Status](https://travis-ci.org/igor-alexandrov/attrio.png)](https://travis-ci.org/igor-alexandrov/attrio)
-[![Code Climate](https://codeclimate.com/github/igor-alexandrov/attrio.png)](https://codeclimate.com/github/igor-alexandrov/attrio)
-[![Coverage Status](https://coveralls.io/repos/igor-alexandrov/attrio/badge.png)](https://coveralls.io/r/igor-alexandrov/attrio)
-[![Dependency Status](https://gemnasium.com/igor-alexandrov/attrio.png)](https://gemnasium.com/igor-alexandrov/attrio)
+[![Build Status](https://travis-ci.org/jetrockets/attrio.png)](https://travis-ci.org/jetrockets/attrio)
+[![Code Climate](https://codeclimate.com/github/jetrockets/attrio.png)](https://codeclimate.com/github/jetrockets/attrio)
+[![Coverage Status](https://coveralls.io/repos/jetrockets/attrio/badge.png)](https://coveralls.io/r/jetrockets/attrio)
+[![Dependency Status](https://gemnasium.com/jetrockets/attrio.png)](https://gemnasium.com/jetrockets/attrio)
 [![Gem Version](https://badge.fury.io/rb/attrio.png)](http://badge.fury.io/rb/attrio)
 
 # Attrio
