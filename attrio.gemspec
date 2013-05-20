@@ -17,11 +17,11 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
-  spec.add_development_dependency 'rspec'
-  spec.add_development_dependency 'webmock', '~> 1.9.0'
-  spec.add_development_dependency 'simplecov'
-  spec.add_development_dependency 'coveralls', :require => false
-  spec.add_development_dependency 'rake'
-  spec.add_development_dependency 'bundler'
-  spec.add_development_dependency "rake"
+  gem.add_development_dependency 'rspec'
+  gem.add_development_dependency 'webmock', '~> 1.9.0'
+  gem.add_development_dependency 'simplecov'
+  gem.add_development_dependency 'coveralls', :require => false
+  gem.add_development_dependency 'rake'
+  gem.add_development_dependency 'bundler'
+  gem.add_development_dependency "rake"
 end
