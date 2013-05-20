@@ -2,11 +2,21 @@
 
 require 'attrio/version'
 
+require 'attrio/core_ext/array'
+require 'attrio/core_ext/class'
+require 'attrio/core_ext/hash'
+require 'attrio/core_ext/object'
+require 'attrio/core_ext/string'
+
 module Attrio
   autoload :Attributes, 'attrio/attributes'
-  autoload :Attributes, 'attrio/inspect'
+  autoload :Inspect, 'attrio/inspect'
 
-  class << self
+  def self.included(base)
+    base.extend Attrio::ClassMethods
+  end
+
+  module ClassMethods
     def define_attributes(options = {}, &block)
       options[:as] ||= :attributes
       
@@ -17,7 +27,6 @@ module Attrio
 
       unless options[:inspect] == false
         self.send :include, Attrio::Inspect
-        
       end
 
       Attrio::Attributes.new(self, options, &block)
@@ -26,9 +35,9 @@ module Attrio
     def const_missing(name)
       Attrio::Attributes.cast_type(name) || super
     end
-  end  
+  end
 
-  module Builders    
+  module Builders
     autoload :ReaderBuilder, 'attrio/builders/reader_builder'
     autoload :WriterBuilder, 'attrio/builders/writer_builder'
   end
