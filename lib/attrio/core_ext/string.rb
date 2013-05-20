@@ -12,12 +12,4 @@ class String # :nodoc:
   def camelize
     self.split(/[^a-z0-9]/i).map{|w| w.capitalize}.join
   end unless method_defined?(:camelize)
-
-  def demodulize
-    if i = self.rindex('::')
-      self[(i+2)..-1]
-    else
-      self
-    end
-  end unless method_defined?(:demodulize)
 end
