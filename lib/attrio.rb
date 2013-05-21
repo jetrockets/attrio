@@ -9,7 +9,8 @@ require 'attrio/core_ext/object'
 require 'attrio/core_ext/string'
 
 module Attrio
-  autoload :Attributes, 'attrio/attributes'
+  autoload :AttributesParser, 'attrio/attributes_parser'
+  autoload :Attribute, 'attrio/attribute'
   autoload :Inspect, 'attrio/inspect'
   autoload :Reset, 'attrio/reset'
 
@@ -31,7 +32,7 @@ module Attrio
         def self.new(*args, &block)
           obj = self.allocate
           obj.send :initialize, *args, &block
-          obj.send "initialize_#{options[:as]}_default_values", *args, &block
+          # obj.send "initialize_#{options[:as]}_default_values", *args, &block
           obj
         end
 
@@ -49,11 +50,11 @@ module Attrio
       self.define_attrio_inspect(options[:as]) unless options[:inspect] == false
       self.define_attrio_reset(options[:as]) unless options[:reset] == false
 
-      Attrio::Attributes.new(self, options, &block)
+      Attrio::AttributesParser.new(self, options, &block)
     end
 
     def const_missing(name)
-      Attrio::Attributes.cast_type(name) || super
+      Attrio::AttributesParser.cast_type(name) || super
     end    
   end
 

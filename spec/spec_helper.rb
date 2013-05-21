@@ -12,7 +12,7 @@ Coveralls.wear!
 
 Class.class_eval do
   def const_missing(name)
-    Attrio::Attributes.cast_type(name) || super
+    Attrio::AttributesParser.cast_type(name) || super
   end
 end
 

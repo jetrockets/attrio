@@ -10,7 +10,7 @@ module Attrio
       def define_attrio_reset(as)
         define_method "reset_#{as.to_s}" do
           self.send(as.to_s).values.each do |attribute|
-            self.instance_variable_set(attribute[:instance_variable_name], nil)
+            self.instance_variable_set(attribute.instance_variable_name, nil)
           end
         end      
 

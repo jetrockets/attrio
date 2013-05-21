@@ -5,27 +5,19 @@ require 'attrio/builders/accessor_builder'
 module Attrio
   module Builders
     class ReaderBuilder < AccessorBuilder
-
-      def accessor
+      def self.accessor
         :reader
       end
 
-      def method_name
-        self.method_name_from_options || self.attribute_name
-      end
-
-      def define_method
-        unless self.object.method_defined?(self.method_name)
-          self.object.class_eval(<<-EOS, __FILE__, __LINE__ + 1)              
-            def #{method_name}              
-              instance_variable_get(:#{instance_variable_name.to_s})
-            end
-          EOS
-
-          self.object.send self.method_visibility, self.method_name
-          self
-        end
-      end
+      def self.define_accessor(object, type, options)
+        unless object.method_defined?(options[:method_name])
+          object.define_method options[:method_name] do            
+            self.instance_variable_get(options[:instance_variable_name])
+          end
+        
+          object.send options[:method_visibility], options[:method_name]
+        end        
+      end      
     end
   end
 end
