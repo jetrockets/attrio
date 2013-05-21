@@ -11,9 +11,13 @@ require 'attrio/core_ext/string'
 module Attrio
   autoload :Attributes, 'attrio/attributes'
   autoload :Inspect, 'attrio/inspect'
+  autoload :Reset, 'attrio/reset'
 
   def self.included(base)    
-    base.send(:extend, Attrio::ClassMethods)
+    base.send(:include, Attrio::Inspect)
+    base.send(:include, Attrio::Reset)
+
+    base.send(:extend, Attrio::ClassMethods)    
   end
 
   module ClassMethods
@@ -25,9 +29,8 @@ module Attrio
         @@#{options[:as].to_s} ||= {}
       EOS
 
-      unless options[:inspect] == false
-        self.send :include, Attrio::Inspect
-      end
+      self.define_attrio_inspect(options[:as]) unless options[:inspect] == false
+      self.define_attrio_reset(options[:as]) unless options[:reset] == false
 
       Attrio::Attributes.new(self, options, &block)
     end
