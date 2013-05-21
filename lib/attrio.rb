@@ -25,8 +25,25 @@ module Attrio
       options[:as] ||= :attributes
       
       cattr_accessor options[:as].to_sym
-      class_eval(<<-EOS, __FILE__, __LINE__ + 1)
+      class_eval(<<-EOS)
         @@#{options[:as].to_s} ||= {}
+
+        def self.new(*args, &block)
+          obj = self.allocate
+          obj.send :initialize, *args, &block
+          obj.send "initialize_#{options[:as]}_default_values", *args, &block
+          obj
+        end
+
+        def initialize_#{options[:as]}_default_values
+          self.send(:#{options[:as]}).values.each do |attribute|
+            if attribute[:default_value].present? && self.send(attribute[:reader_name]).blank?
+              self.send(attribute[:writer_name], attribute[:default_value])
+            end
+          end
+        end
+
+        private :initialize_#{options[:as]}_default_values
       EOS
 
       self.define_attrio_inspect(options[:as]) unless options[:inspect] == false
@@ -37,7 +54,7 @@ module Attrio
 
     def const_missing(name)
       Attrio::Attributes.cast_type(name) || super
-    end
+    end    
   end
 
   module Builders
