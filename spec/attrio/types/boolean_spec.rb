@@ -33,6 +33,16 @@ describe Attrio::Types::Boolean do
         object.boolean_attribute = '1'
         object.boolean_attribute?.should be_true      
       end
+
+      it 'should cast 1' do
+        object.boolean_attribute = 1
+        object.boolean_attribute?.should be_true      
+      end
+
+      it 'should cast "yes"' do
+        object.boolean_attribute = 'yes'
+        object.boolean_attribute?.should be_true      
+      end
     end
   end
 

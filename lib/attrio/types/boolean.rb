@@ -4,12 +4,12 @@ module Attrio
   module Types
     class Boolean < Base
       def self._typecast(value, options = {})
-        return true if ['yes', '1', 1, 'true', true].include?(value)
+        return true if ['yes', '1', 1, 'true'].include?(value)
         return false
       end
 
       def self.typecasted?(value)
-        value == true || value == false
+        value.is_a?(TrueClass) || value.is_a?(FalseClass)
       end
 
       def self.default_reader_aliases(method_name)
