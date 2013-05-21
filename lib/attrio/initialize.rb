@@ -8,18 +8,10 @@ module Attrio
 
     module ClassMethods
       def define_attrio_new(as)
-        define_method("initialize_#{as}_default_values") do
-          self.send(as).values.each do |attribute|
-            unless self.instance_variable_get(attribute.instance_variable_name).present?
-              self.instance_variable_set(attribute.instance_variable_name, attribute.default_value) 
-            end
-          end
-        end
-
         define_singleton_method(:new) do |*args, &block|
           obj = self.allocate
-          obj.send :initialize, *args, &block
-          obj.send "initialize_#{as}_default_values"
+          obj.send "reset_#{as}!"
+          obj.send :initialize, *args, &block          
           obj
         end
       end

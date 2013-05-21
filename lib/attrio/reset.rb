@@ -9,13 +9,12 @@ module Attrio
     module ClassMethods
       def define_attrio_reset(as)
         define_method "reset_#{as.to_s}" do
-          self.send(as.to_s).values.each do |attribute|
-            self.instance_variable_set(attribute.instance_variable_name, nil)
-            # self.instance_variable_set(attribute[:instance_variable_name], attribute[:default_value])
+          self.send(as.to_s).values.each do |attribute|                        
+            self.send(attribute.writer_method_name, attribute.default_value)            
           end
         end
 
-        self.send(:alias_method, "reset_#{as.to_s}!", "reset_#{as.to_s}")
+        self.send(:alias_method, "reset_#{as.to_s}!", "reset_#{as.to_s}")        
       end
     end
   end
