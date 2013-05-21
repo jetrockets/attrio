@@ -8,7 +8,7 @@ module Attrio
       end
 
       def self.typecasted?(value)
-        value.id_a? ::Integer
+        value.is_a? ::Integer
       end
     end
   end
