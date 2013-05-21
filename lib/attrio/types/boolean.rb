@@ -3,7 +3,7 @@
 module Attrio  
   module Types
     class Boolean < Base
-      def self._typecast(value, options = {})
+      def self.typecast(value, options = {})
         return true if ['yes', '1', 1, 'true'].include?(value)
         return false
       end

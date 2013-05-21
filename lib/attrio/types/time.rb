@@ -3,7 +3,7 @@
 module Attrio
   module Types
     class Time < Base
-      def self._typecast(value, options = {})
+      def self.typecast(value, options = {})
         options[:format].present? ? ::Time.strftime(value, options[:format]) : ::Time.parse(value)
       end
 

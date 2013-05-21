@@ -18,7 +18,7 @@ module Attrio
         unless self.object.method_defined?(self.method_name)
           self.object.class_eval(<<-EOS, __FILE__, __LINE__ + 1)              
             def #{self.method_name}(value)
-              value = #{type}.respond_to?(:typecast) ? #{type}.typecast(value) : #{type}.new(value)
+              value = #{type}.respond_to?(:typecast) ? #{type}._typecast(value) : #{type}.new(value)
               instance_variable_set(:#{instance_variable_name.to_s}, value)
             end
           EOS

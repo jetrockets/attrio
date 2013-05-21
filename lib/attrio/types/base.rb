@@ -2,15 +2,15 @@
 
 module Attrio
   module Types
-    class Base < Object        
+    class Base < Object
       private_class_method :new
 
       def self.typecast(value, options = {})
-        self.typecasted?(value) ? value : self._typecast(value, options)
+        raise NotImplementedError
       end
 
       def self._typecast(value, options = {})
-        raise NotImplementedError
+        self.typecasted?(value) ? value : self.typecast(value, options)
       end
 
       def self.typecasted?(value)
