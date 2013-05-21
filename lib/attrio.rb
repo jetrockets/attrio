@@ -10,10 +10,12 @@ require 'attrio/core_ext/string'
 
 module Attrio
   autoload :Attributes, 'attrio/attributes'
+  autoload :Initialize, 'attrio/initialize'
   autoload :Inspect, 'attrio/inspect'
   autoload :Reset, 'attrio/reset'
 
   def self.included(base)    
+    base.send(:include, Attrio::Initialize)
     base.send(:include, Attrio::Inspect)
     base.send(:include, Attrio::Reset)
 
@@ -27,25 +29,9 @@ module Attrio
       cattr_accessor options[:as].to_sym
       class_eval(<<-EOS)
         @@#{options[:as].to_s} ||= {}
-
-        def self.new(*args, &block)
-          obj = self.allocate
-          obj.send :initialize, *args, &block
-          obj.send "initialize_#{options[:as]}_default_values", *args, &block
-          obj
-        end
-
-        def initialize_#{options[:as]}_default_values
-          self.send(:#{options[:as]}).values.each do |attribute|
-            if attribute[:default_value].present? && self.send(attribute[:reader_name]).blank?
-              self.send(attribute[:writer_name], attribute[:default_value])
-            end
-          end
-        end
-
-        private :initialize_#{options[:as]}_default_values
       EOS
 
+      self.define_attrio_new(options[:as])
       self.define_attrio_inspect(options[:as]) unless options[:inspect] == false
       self.define_attrio_reset(options[:as]) unless options[:reset] == false
 
