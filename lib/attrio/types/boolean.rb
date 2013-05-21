@@ -3,7 +3,7 @@
 module Attrio  
   module Types
     class Boolean < Base
-      def self._typecast(value, options = {})
+      def self.typecast(value, options = {})
         true_values = options[:true] || options[:true_values] || ['yes', '1', 1, 'true']
         false_values = options[:false] || options[:false_values]
 

@@ -28,6 +28,10 @@ module Attrio
       @instance_variable_name ||= self.options[:instance_variable_name] || "@#{self.name}"
     end
 
+    def default_value
+      self.options[:default] || self.options[:default_value]
+    end
+
     def define_writer
       Attrio::Builders::WriterBuilder.define(self.object, self.type,
         self.options.merge({
