@@ -10,6 +10,12 @@ require 'webmock/rspec'
 require 'coveralls'
 Coveralls.wear!
 
+Class.class_eval do
+  def const_missing(name)
+    Attrio::Attributes.cast_type(name) || super
+  end
+end
+
 RSpec.configure do |config|
   config.include WebMock::API
   config.order = :rand

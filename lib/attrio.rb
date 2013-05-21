@@ -12,8 +12,8 @@ module Attrio
   autoload :Attributes, 'attrio/attributes'
   autoload :Inspect, 'attrio/inspect'
 
-  def self.included(base)
-    base.extend Attrio::ClassMethods
+  def self.included(base)    
+    base.send(:extend, Attrio::ClassMethods)
   end
 
   module ClassMethods
