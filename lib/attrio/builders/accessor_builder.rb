@@ -32,6 +32,7 @@ module Attrio
             self.object.send(:alias_method, alias_method_name, self.method_name)
           end
         end
+        self
       end
 
       def method_visibility_from_options
@@ -49,6 +50,10 @@ module Attrio
 
       def instance_variable_name
         self.options[:instance_variable_name] || "@#{self.attribute_name}"
+      end
+
+      def default_value
+        self.options[:default]
       end
     end
   end

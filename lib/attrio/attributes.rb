@@ -15,7 +15,7 @@ module Attrio
 
     def attr(*args)
       options = args.extract_options!
-      type = options.delete(:type) || args[1]  
+      type = options.delete(:type) || args[1]
       attribute_name = args[0].to_s
 
       casted_type = self.class.cast_type(type)
@@ -26,7 +26,7 @@ module Attrio
       self.add_attribute(attribute_name, reader_builder, writer_builder)
 
       reader_builder.define_method.define_aliases
-      writer_builder.define_method.define_aliases        
+      writer_builder.define_method.define_aliases
     end
 
     def self.cast_type(constant)
@@ -36,10 +36,10 @@ module Attrio
       string = string.camelize if (string =~ /\w_\w/ || string[0].downcase == string[0])
       
       begin
-        if Attrio::Types.const_defined?(string) 
+        if Attrio::Types.const_defined?(string)
           return Attrio::Types.const_get(string)
         elsif Module.const_defined?(string)
-          return Module.const_get(string)    
+          return Module.const_get(string)
         else
           return nil
         end
@@ -48,14 +48,15 @@ module Attrio
       end
     end
 
-  protected  
+  protected
 
-    def add_attribute(attribute_name, reader_builder, writer_builder)        
+    def add_attribute(attribute_name, reader_builder, writer_builder)
       @object.send(self.options[:as])[attribute_name.to_sym] = {
         :reader_name => reader_builder.method_name,
         :writer_name => writer_builder.method_name,
-        :instance_variable_name => writer_builder.instance_variable_name
-      }      
+        :instance_variable_name => writer_builder.instance_variable_name,
+        :default_value => writer_builder.default_value
+      }
     end
   end
 end
