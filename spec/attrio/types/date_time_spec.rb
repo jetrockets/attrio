@@ -1,35 +1,80 @@
 require 'spec_helper'
 
-describe Attrio::Types::Date do
-  let(:model) do
-    Class.new do
-      include Attrio
+describe Attrio::Types::DateTime do
+  context 'standard casting conventions' do
+    let(:model) do
+      Class.new do
+        include Attrio
 
-      define_attributes do
-        attr :date_time_attribute, DateTime
+        define_attributes do
+          attr :date_time_attribute, DateTime
+        end
+      end
+    end
+
+    let(:object){ model.new }
+
+    context 'with not typecasted assignment' do
+      it 'should cast <String>' do
+        now = DateTime.now
+
+        object.date_time_attribute = now.to_s
+        object.date_time_attribute.should be_instance_of(DateTime)
+        object.date_time_attribute.should == now
+      end
+    end
+
+    context 'with typecasted assignment' do
+      it 'should assign <DateTime>' do
+        now = DateTime.now
+
+        object.date_time_attribute = now
+        object.date_time_attribute.should be_instance_of(DateTime)
+        object.date_time_attribute.should be_equal(now)
       end
     end
   end
 
-  let(:object){ model.new }
+  context ':format option passed' do
+    let(:model) do
+      Class.new do
+        include Attrio
 
-  context 'assignment' do
-    it "should cast DateTime" do
-      date_time = DateTime.now
-      object.date_time_attribute = date_time
-      object.date_time_attribute.should == date_time
+        define_attributes do
+          attr :date_time_attribute, DateTime, :format => '%m/%d/%y-%H:%M:%S'
+        end
+      end
     end
 
-    it 'should cast string DateTime' do
-      object.date_time_attribute = "2013-05-21T19:01:48"
-      object.date_time_attribute.should == DateTime.new(2013, 05, 21, 19, 01, 48)
+    let(:object){ model.new }
+
+    context 'with not typecasted assignment' do
+      it 'should cast <String> of appropriate format' do
+        now = DateTime.now
+
+        object.date_time_attribute = now.strftime('%m/%d/%y-%H:%M:%S')
+        object.date_time_attribute.should be_instance_of(DateTime)
+        object.date_time_attribute.should == now
+      end
+
+      it 'should not cast <String> with invalid format' do
+        now = DateTime.now
+
+        lambda {
+          object.date_time_attribute = now.strftime('%m/%d/%y-%H:%M:%S')
+        }.should_not raise_exception
+        object.date_time_attribute.should be_nil
+      end
+    end
+
+    context 'with typecasted assignment' do
+      it 'should assign <DateTime>' do
+        now = DateTime.now
+
+        object.date_time_attribute = now
+        object.date_time_attribute.should be_instance_of(DateTime)
+        object.date_time_attribute.should be_equal(now)
+      end
     end
   end
-
-  # :format => '%H-%M-%S:%d:%m:%Y'
-
-  # it 'should parse string date' do  
-  #   object.date_time_attribute = "19-01-48:21:05:2013"
-  #   object.date_time_attribute.should == DateTime.new(2013, 05, 21, 19, 01, 48)
-  # end
 end

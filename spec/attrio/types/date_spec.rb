@@ -19,7 +19,7 @@ describe Attrio::Types::Date do
         today = Date.today
 
         object.date_attribute = today.to_s
-        object.date_attribute.should be_instance_of(Date)        
+        object.date_attribute.should be_instance_of(Date)
         object.date_attribute.should == today
       end
     end
@@ -29,7 +29,7 @@ describe Attrio::Types::Date do
         today = Date.today
 
         object.date_attribute = today
-        object.date_attribute.should be_instance_of(Date)        
+        object.date_attribute.should be_instance_of(Date)
         object.date_attribute.should be_equal(today)
       end
     end
@@ -53,17 +53,17 @@ describe Attrio::Types::Date do
         today = Date.today
 
         object.date_attribute = today.strftime('%m/%d/%y')
-        object.date_attribute.should be_instance_of(Date)        
+        object.date_attribute.should be_instance_of(Date)
         object.date_attribute.should == today
       end
 
-      it 'should not cast <String> without format' do
+      it 'should not cast <String> with invalid format' do
         today = Date.today
 
         lambda {
           object.date_attribute = today.strftime('%d-%m-%Y')
-        }.should_not raise_exception        
-        object.date_attribute.should be_nil        
+        }.should_not raise_exception
+        object.date_attribute.should be_nil
       end
     end
 
@@ -72,7 +72,7 @@ describe Attrio::Types::Date do
         today = Date.today
 
         object.date_attribute = today
-        object.date_attribute.should be_instance_of(Date)        
+        object.date_attribute.should be_instance_of(Date)
         object.date_attribute.should be_equal(today)
       end
     end

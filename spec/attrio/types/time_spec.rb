@@ -1,35 +1,80 @@
 require 'spec_helper'
 
-describe Attrio::Types::Date do
-  let(:model) do
-    Class.new do
-      include Attrio
+describe Attrio::Types::Time do
+  context 'standard casting conventions' do
+    let(:model) do
+      Class.new do
+        include Attrio
 
-      define_attributes do
-        attr :time_attribute, Time
+        define_attributes do
+          attr :time_attribute, Time
+        end
+      end
+    end
+
+    let(:object){ model.new }
+
+    context 'with not typecasted assignment' do
+      it 'should cast <String>' do
+        now = Time.now
+
+        object.time_attribute = now.to_s
+        object.time_attribute.should be_instance_of(Time)
+        object.time_attribute.should == now
+      end
+    end
+
+    context 'with typecasted assignment' do
+      it 'should assign <Time>' do
+        now = Time.now
+
+        object.time_attribute = now
+        object.time_attribute.should be_instance_of(Time)
+        object.time_attribute.should be_equal(now)
       end
     end
   end
 
-  let(:object){ model.new }
-  
-  context 'assignment' do
-    it "should cast time" do
-      time = Time.now
-      object.time_attribute = time
-      object.time_attribute.should == time
+  context ':format option passed' do
+    let(:model) do
+      Class.new do
+        include Attrio
+
+        define_attributes do
+          attr :time_attribute, Time, :format => '%m/%d/%y-%H:%M:%S'
+        end
+      end
     end
 
-    it 'should cast string time' do      
-      object.time_attribute = "2013-05-21T19:01:48"
-      object.time_attribute.should == Time.new(2013, 05, 21, 19, 01, 48)
+    let(:object){ model.new }
+
+    context 'with not typecasted assignment' do
+      it 'should cast <String> of appropriate format' do
+        now = Time.now
+
+        object.time_attribute = now.strftime('%m/%d/%y-%H:%M:%S')
+        object.time_attribute.should be_instance_of(Time)
+        object.time_attribute.should == now
+      end
+
+      it 'should not cast <String> with invalid format' do
+        now = Time.now
+
+        lambda {
+          object.time_attribute = now.strftime('%m/%d/%y-%H:%M:%S')
+        }.should_not raise_exception
+        object.time_attribute.should be_nil
+      end
+    end
+
+    context 'with typecasted assignment' do
+      it 'should assign <Time>' do
+        now = Time.now
+
+        object.time_attribute = now
+        object.time_attribute.should be_instance_of(Time)
+        object.time_attribute.should be_equal(now)
+      end
     end
   end
-
-  # :format => '%H-%M-%S:%d:%m:%Y'
-  # 
-  # it 'should parse string date' do  
-  #   object.time_attribute = "19-01-48:21:05:2013"
-  #   object.time_attribute.should == Time.new(2013, 05, 21, 19, 01, 48)
-  # end
 end
