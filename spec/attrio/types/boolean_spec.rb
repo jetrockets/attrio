@@ -14,7 +14,7 @@ describe Attrio::Types::Boolean do
 
     let(:object){ model.new }
 
-    context 'not typecasted assignment' do    
+    context 'not typecasted assignment' do
       it 'should cast "true"' do        
         object.boolean_attribute = 'true'
         object.boolean_attribute?.should be_true
