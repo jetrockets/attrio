@@ -88,15 +88,12 @@ describe Attrio::Types::Boolean do
     end
 
     it 'should cast anything else as FalseClass' do        
-      object.reset_attributes!
       object.boolean_attribute = 'yes'
       object.boolean_attribute?.should be_false
 
-      object.reset_attributes!
       object.boolean_attribute = 1
       object.boolean_attribute?.should be_false
 
-      object.reset_attributes!
       object.boolean_attribute = 0
       object.boolean_attribute?.should be_false
     end
