@@ -9,7 +9,7 @@ Gem::Specification.new do |gem|
   gem.version       = Attrio::Version::STRING
   gem.authors       = ['Igor Alexandrov', 'Julia Egorova']  
   gem.email         = 'hello@jetrockets.ru'
-  gem.summary       = "Attributes for Plain Old Ruby Objects"
+  gem.summary       = "Attributes for plain old Ruby objects. No dependencies, only simplicity and clearness."
   gem.homepage      = "https://github.com/jetrockets/attrio"
 
   gem.files         = `git ls-files`.split($/)
