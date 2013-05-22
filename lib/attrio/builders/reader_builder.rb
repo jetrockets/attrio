@@ -11,7 +11,7 @@ module Attrio
 
       def self.define_accessor(object, type, options)
         unless object.method_defined?(options[:method_name])
-          object.define_method options[:method_name] do            
+          object.send :define_method, options[:method_name] do            
             self.instance_variable_get(options[:instance_variable_name])
           end
         
