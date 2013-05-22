@@ -4,8 +4,11 @@ module Attrio
   module Types
     class Time < Base
       def self.typecast(value, options = {})
-        options[:format].present? ? ::Time.strptime(value, options[:format]) : ::Time.parse(value)
-      rescue ArgumentError => e  
+        begin
+          options[:format].present? ? ::Time.strptime(value, options[:format]) : ::Time.parse(value)
+        rescue ArgumentError => e
+          nil
+        end      
       end
 
       def self.typecasted?(value)
