@@ -7,7 +7,7 @@ describe Attrio::Types::DateTime do
         include Attrio
 
         define_attributes do
-          attr :date_time_attribute, DateTime
+          attr :datetime_attribute, DateTime
         end
       end
     end
@@ -16,11 +16,11 @@ describe Attrio::Types::DateTime do
 
     context 'with not typecasted assignment' do
       it 'should cast <String>' do
-        now = DateTime.now
+        now = Time.at(Time.now.to_i).to_datetime
 
-        object.date_time_attribute = now.to_s
-        object.date_time_attribute.should be_instance_of(DateTime)
-        object.date_time_attribute.should == now
+        object.datetime_attribute = now.to_s
+        object.datetime_attribute.should be_instance_of(DateTime)
+        object.datetime_attribute.should == now
       end
     end
 
@@ -28,9 +28,9 @@ describe Attrio::Types::DateTime do
       it 'should assign <DateTime>' do
         now = DateTime.now
 
-        object.date_time_attribute = now
-        object.date_time_attribute.should be_instance_of(DateTime)
-        object.date_time_attribute.should be_equal(now)
+        object.datetime_attribute = now
+        object.datetime_attribute.should be_instance_of(DateTime)
+        object.datetime_attribute.should be_equal(now)
       end
     end
   end
@@ -41,7 +41,7 @@ describe Attrio::Types::DateTime do
         include Attrio
 
         define_attributes do
-          attr :date_time_attribute, DateTime, :format => '%m/%d/%y-%H:%M:%S'
+          attr :datetime_attribute, DateTime, :format => '%m/%d/%y-%H:%M:%S-%z'
         end
       end
     end
@@ -50,20 +50,20 @@ describe Attrio::Types::DateTime do
 
     context 'with not typecasted assignment' do
       it 'should cast <String> of appropriate format' do
-        now = DateTime.now
+        now = Time.at(Time.now.to_i).to_datetime
 
-        object.date_time_attribute = now.strftime('%m/%d/%y-%H:%M:%S')
-        object.date_time_attribute.should be_instance_of(DateTime)
-        object.date_time_attribute.should == now
+        object.datetime_attribute = now.strftime('%m/%d/%y-%H:%M:%S-%z')
+        object.datetime_attribute.should be_instance_of(DateTime)
+        object.datetime_attribute.should == now
       end
 
       it 'should not cast <String> with invalid format' do
         now = DateTime.now
 
         lambda {
-          object.date_time_attribute = now.strftime('%m/%d/%y-%H:%M:%S')
+          object.datetime_attribute = now.strftime('%H:%M:%S-%m/%d/%y')
         }.should_not raise_exception
-        object.date_time_attribute.should be_nil
+        object.datetime_attribute.should be_nil
       end
     end
 
@@ -71,9 +71,9 @@ describe Attrio::Types::DateTime do
       it 'should assign <DateTime>' do
         now = DateTime.now
 
-        object.date_time_attribute = now
-        object.date_time_attribute.should be_instance_of(DateTime)
-        object.date_time_attribute.should be_equal(now)
+        object.datetime_attribute = now
+        object.datetime_attribute.should be_instance_of(DateTime)
+        object.datetime_attribute.should be_equal(now)
       end
     end
   end

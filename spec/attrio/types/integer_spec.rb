@@ -1,27 +1,38 @@
 require 'spec_helper'
 
 describe Attrio::Types::Integer do
-  let(:model) do
-    Class.new do
-      include Attrio
+  context 'standard casting conventions' do
+    let(:model) do
+      Class.new do
+        include Attrio
 
-      define_attributes do
-        attr :integer_attribute, Integer
+        define_attributes do
+          attr :integer_attribute, Integer
+        end
       end
     end
-  end
 
-  let(:object){ model.new }
-  
-  context 'assignment' do
-    it "should cast integer number" do      
-      object.integer_attribute = 100
-      object.integer_attribute.should == 100
+    let(:object){ model.new }
+
+    context 'with not typecasted assignment' do
+      it 'should cast object which has method to_i' do
+        object.integer_attribute = "10 test"
+        object.integer_attribute.should == 10
+      end
+
+      it 'should not cast object which has not method to_i' do
+        lambda {
+          object.integer_attribute = []
+        }.should_not raise_exception
+        object.integer_attribute.should be_nil
+      end
     end
 
-    it 'should cast object which has method to_i' do      
-      object.integer_attribute = "100 test"
-      object.integer_attribute.should == 100
+    context 'with typecasted assignment' do
+      it 'should assign <Float>' do
+        object.integer_attribute = 10
+        object.integer_attribute.should == 10
+      end
     end
   end
 end

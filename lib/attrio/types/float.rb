@@ -4,7 +4,11 @@ module Attrio
   module Types
     class Float < Base
       def self.typecast(value, options = {})
-        value.to_f
+        begin
+          value.to_f
+        rescue NoMethodError => e
+          nil
+        end
       end
 
       def self.typecasted?(value)

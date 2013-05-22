@@ -16,7 +16,7 @@ describe Attrio::Types::Time do
 
     context 'with not typecasted assignment' do
       it 'should cast <String>' do
-        now = Time.now
+        now = Time.at(Time.now.to_i)
 
         object.time_attribute = now.to_s
         object.time_attribute.should be_instance_of(Time)
@@ -50,7 +50,7 @@ describe Attrio::Types::Time do
 
     context 'with not typecasted assignment' do
       it 'should cast <String> of appropriate format' do
-        now = Time.now
+        now = Time.at(Time.now.to_i)
 
         object.time_attribute = now.strftime('%m/%d/%y-%H:%M:%S')
         object.time_attribute.should be_instance_of(Time)
@@ -61,7 +61,7 @@ describe Attrio::Types::Time do
         now = Time.now
 
         lambda {
-          object.time_attribute = now.strftime('%m/%d/%y-%H:%M:%S')
+          object.time_attribute = now.strftime('%H:%M:%S-%m/%d/%y')
         }.should_not raise_exception
         object.time_attribute.should be_nil
       end

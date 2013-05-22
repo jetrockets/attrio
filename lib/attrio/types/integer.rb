@@ -4,7 +4,11 @@ module Attrio
   module Types
     class Integer < Base
       def self.typecast(value, options = {})
-        value.to_i
+        begin
+          value.to_i
+        rescue NoMethodError => e
+          nil
+        end
       end
 
       def self.typecasted?(value)

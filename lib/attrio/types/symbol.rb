@@ -4,7 +4,11 @@ module Attrio
   module Types
     class Symbol < Base
       def self.typecast(value, options = {})
-        value.underscore.to_sym
+        begin
+          value.underscore.to_sym
+        rescue NoMethodError => e
+          nil
+        end
       end
 
       def self.typecasted?(value)
