@@ -100,6 +100,21 @@ user.name
 # => 'John Doe'
 ```
 
+### Methods visibility
+
+Don't want your accessors to be public? This behaviour can be overridden easily. 
+
+```ruby
+class User
+  include Attrio
+	
+  define_attributes do
+  	attr :name, String, :writer => :protected
+    attr :secret_rating, Integer, :reader => :private
+  end
+end
+```
+
 ### Types
 
 Any Ruby class can be passed as type to Attrio. If this class responds to `typecast` and `typecasted?` methods then they will be called, else `new` will be called.
