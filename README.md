@@ -146,6 +146,8 @@ class Klass
 end
 ```
 
+**Symbol**
+
 ## Note on Patches / Pull Requests
 
 * Fork the project.
