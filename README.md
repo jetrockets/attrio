@@ -76,6 +76,47 @@ user = User.new
 user.api_attributes # => {...}
 ```
 
+### Built-in Types
+
+**Boolean**
+
+By default boolean typecasts 'yes', '1', 1, 'true' as `TrueClass` and all other values as `FalseClass`, but you easily modify this behaviour.
+
+```ruby
+class Klass
+  include Attrio
+	
+  define_attributes :as => 'api_attributes' do
+  	attr :standard_attribute, Boolean
+  	
+  	attr :custom_attribute, Boolean, :yes => ['ja', '1', 1]
+  	# attr :custom_attribute, Boolean, :yes_values => ['ja', '1', 1]
+  	# attr :custom_attribute, Boolean, :no => ['nein', '0', 0]
+  	# attr :custom_attribute, Boolean, :no_values => ['nein', '0', 0]
+  end
+end
+```
+
+**Date, Time and DateTime**
+
+These three class have similar behaviour and options. By passing `:format` option you can setup how `strftime` method will try to parse your string.
+
+```ruby
+class Klass
+  include Attrio
+	
+  define_attributes :as => 'api_attributes' do
+  	attr :date_attribute, Date
+  	attr :time_attribute, Time
+  	attr :date_time_attribute, DateTime
+  	
+	attr :custome_date_time_attribute, DateTime, :format => '%m/%d/%y-%H:%M:%S-%z'
+  end
+end
+```
+
+
+
 ## Note on Patches / Pull Requests
 
 * Fork the project.
