@@ -38,7 +38,7 @@ class User
 end
 ```
 
-By default Attrio creates `#attributes` accessor which contains `Hash` of with attributes names as keys and instances of `Attrio::Attribute` as values. Each instance of `Attrio::Attribute` contains following information:
+By default Attrio defines `#attributes` accessor which contains `Hash` with attributes names as keys and instances of `Attrio::Attribute` as values. Each instance of `Attrio::Attribute` contains following information:
  * type
  * writer method name
  * writer method visibility
@@ -57,7 +57,7 @@ user.attributes
 # }
 ```
 
-Accessor name can be easily overriden by passing `:as` option to `define_attributes` block.
+Accessor name can be easily overridden by passing `:as` option to `define_attributes` block.
 
 ```ruby
 class User
@@ -74,6 +74,30 @@ end
 ```ruby
 user = User.new
 user.api_attributes # => {...}
+```
+
+### Default values
+
+You can easily setup default values for your attributes by passing `:default` option to `attr` method.
+
+```ruby
+class User
+  include Attrio
+	
+  define_attributes do
+  	attr :name, String, :default => 'John Doe'
+    attr :age, Integer, :default => 18
+    attr :birthday, DateTime
+  end
+end
+```
+
+```ruby
+user = User.new
+user.age
+# => 18
+user.name
+# => 'John Doe'
 ```
 
 ### Types
