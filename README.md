@@ -22,6 +22,56 @@ Or install it yourself as:
 
     $ gem install attrio
 
+## Usage
+
+Include Attrio into your class and then use `#define_attributes` block to declare you attributes.
+
+```ruby
+class User
+  include Attrio
+	
+  define_attributes do
+  	attr :name, String
+    attr :age, Integer
+    attr :birthday, DateTime
+  end
+end
+```
+
+By default Attrio creates `#attributes` accessor which contains `Hash` of with attributes names as keys and instances of `Attrio::Attribute` as values. Each instance of `Attrio::Attribute` contains following information:
+ * type
+ * writer method name
+ * writer method visibility
+ * reader method name
+ * reader method visibility
+ * instance variable name
+ * additional options
+ 
+```ruby
+user = User.new
+user.attributes 
+# => {:name=>#<Attrio::Attribute:0x007fc44e8ca680 @object=#<Class:0x007fc44e8b2b48>, @name="name", @type=String, @options={}, @writer_method_name="name=", @writer_visibility=:public, @instance_variable_name="@name", @reader_method_name="name", @reader_visibility=:public>, :age=>#<Attrio::Attribute:0x007fc44e8d4c98 @object=#<Class:0x007fc44e8b2b48>, @name="age", @type=Attrio::Types::Integer, @options={}, @writer_method_name="age=", @writer_visibility=:public, @instance_variable_name="@age", @reader_method_name="age", @reader_visibility=:public>, :birthday=>#<Attrio::Attribute:0x007fc44e8e2e38 @object=#<Class:0x007fc44e8b2b48>, @name="birthday", @type=Attrio::Types::DateTime, @options={}, @writer_method_name="birthday=", @writer_visibility=:public, @instance_variable_name="@birthday", @reader_method_name="birthday", @reader_visibility=:public>}
+```
+
+Accessor name can be easily overriden by passing `:as` option to `define_attributes` block.
+
+```ruby
+class User
+  include Attrio
+	
+  define_attributes :as => 'api_attributes' do
+  	attr :name, String
+    attr :age, Integer
+    attr :birthday, DateTime
+  end
+end
+```
+
+```ruby
+user = User.new
+user.api_attributes # => {...}
+```
+
 ## Note on Patches / Pull Requests
 
 * Fork the project.
