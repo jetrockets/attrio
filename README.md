@@ -133,7 +133,7 @@ end
 
 Attribute will be typecasted using `to_i` method.
 
-Optional `:system_of_calculation` parameter can be passed, during the typecast attribute will be assumed to be in specified system of calculation and will always be translated to decimal system.
+Optional `:base` parameter can be passed, during the typecast attribute will be assumed to be in specified base and will always be translated to decimal base.
 
 ```ruby
 class Klass
@@ -141,7 +141,7 @@ class Klass
 	
   define_attributes :as => 'api_attributes' do
   	attr :integer_attribute, Integer
-  	attr :custom_integer_attribute, Integer, :system_of_calculation => 2
+  	attr :custom_integer_attribute, Integer, :base => 2
   end
 end
 ```
