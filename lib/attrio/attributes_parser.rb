@@ -28,7 +28,7 @@ module Attrio
       return constant if constant.is_a?(Class) && !!(constant < Attrio::Types::Base)
 
       string = constant.to_s
-      string = string.camelize if (string =~ /\w_\w/ || string.chars.first.downcase == string[0])
+      string = string.camelize if (string =~ /\w_\w/ || string.chars.first.downcase == string.chars.first)
       
       begin
         if Attrio::Types.const_defined?(string)

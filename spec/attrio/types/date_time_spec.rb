@@ -16,7 +16,7 @@ describe Attrio::Types::DateTime do
 
     context 'with not typecasted assignment' do
       it 'should cast <String>' do
-        now = Time.at(Time.now.to_i).to_datetime
+        now = Time.at(Time.now.to_i).send :to_datetime
 
         object.datetime_attribute = now.to_s
         object.datetime_attribute.should be_instance_of(DateTime)
@@ -50,7 +50,7 @@ describe Attrio::Types::DateTime do
 
     context 'with not typecasted assignment' do
       it 'should cast <String> of appropriate format' do
-        now = Time.at(Time.now.to_i).to_datetime
+        now = Time.at(Time.now.to_i).send :to_datetime
 
         object.datetime_attribute = now.strftime('%m/%d/%y-%H:%M:%S-%z')
         object.datetime_attribute.should be_instance_of(DateTime)

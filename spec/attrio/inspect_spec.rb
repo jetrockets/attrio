@@ -31,7 +31,11 @@ describe Attrio::Inspect do
     let(:object) { model.new }
 
     it 'should' do
-      object.method(:inspect).source_location.should be_nil
+      if RUBY_ENGINE == 'rbx'
+        object.method(:inspect).source_location.first.should_not match(/attrio/)
+      else
+        object.method(:inspect).source_location.should be_nil
+      end                
     end
   end
 end
