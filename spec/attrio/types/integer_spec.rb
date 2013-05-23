@@ -15,12 +15,12 @@ describe Attrio::Types::Integer do
     let(:object){ model.new }
 
     context 'with not typecasted assignment' do
-      it 'should cast an object which implements method to_i' do
+      it 'should cast an object which has method to_i' do
         object.integer_attribute = "10 test"
         object.integer_attribute.should == 10
       end
 
-      it 'should not cast an object which does not implement method to_i' do
+      it 'should not cast an object which has not method to_i' do
         lambda {
           object.integer_attribute = []
         }.should_not raise_exception
@@ -50,17 +50,17 @@ describe Attrio::Types::Integer do
     let(:object){ model.new }
 
     context 'with not typecasted assignment' do
-      it 'should cast' do
+      it 'should cast <String> considering :base option' do
         object.integer_attribute = "A"
         object.integer_attribute.should == 10
       end
 
-      it 'should cast an object which implements method to_i' do
+      it 'should cast an object which has method to_i' do
         object.integer_attribute = 10.0
         object.integer_attribute.should == 10
       end
 
-      it 'should not cast an object which does not implement method to_i' do
+      it 'should not cast an object which has not method to_i' do
         lambda {
           object.integer_attribute = []
         }.should_not raise_exception

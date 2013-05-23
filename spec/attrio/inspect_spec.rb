@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Attrio::Inspect do
-  context '' do
+  context 'without options' do
     let(:model) do
       Class.new do
         include Attrio
@@ -13,12 +13,12 @@ describe Attrio::Inspect do
 
     let(:object) { model.new }
 
-    it 'should' do
+    it 'should have inspect defined by attrio' do
       object.method(:inspect).source_location.first.should match(/lib\/attrio\/inspect.rb/)
     end
   end
 
-  context '' do
+  context ':inspect option passed' do
     let(:model) do
       Class.new do
         include Attrio
@@ -30,7 +30,7 @@ describe Attrio::Inspect do
 
     let(:object) { model.new }
 
-    it 'should' do
+    it 'should not have inspect defined by attrio' do
       if RUBY_ENGINE == 'rbx'
         object.method(:inspect).source_location.first.should_not match(/attrio/)
       else
