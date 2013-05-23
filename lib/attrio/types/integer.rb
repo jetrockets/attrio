@@ -5,6 +5,7 @@ module Attrio
     class Integer < Base
       def self.typecast(value, options = {})
         begin
+          return value.to_i(options[:base]) if value.is_a?(String) && options[:base].present? 
           value.to_i
         rescue NoMethodError => e
           nil
