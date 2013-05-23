@@ -110,12 +110,41 @@ class Klass
   	attr :time_attribute, Time
   	attr :date_time_attribute, DateTime
   	
-	attr :custome_date_time_attribute, DateTime, :format => '%m/%d/%y-%H:%M:%S-%z'
+	attr :custom_date_time_attribute, DateTime, :format => '%m/%d/%y-%H:%M:%S-%z'
   end
 end
 ```
 
+**Float**
 
+Attribute will be typecasted using `to_f` method.
+
+```ruby
+class Klass
+  include Attrio
+	
+  define_attributes :as => 'api_attributes' do
+  	attr :float_attribute, Float
+  end
+end
+```
+
+**Integer**
+
+Attribute will be typecasted using `to_i` method.
+
+Optional `:system_of_calculation` parameter can be passed, during the typecast attribute will be assumed to be in specified system of calculation and will always be translated to decimal system.
+
+```ruby
+class Klass
+  include Attrio
+	
+  define_attributes :as => 'api_attributes' do
+  	attr :integer_attribute, Integer
+  	attr :custom_integer_attribute, Integer, :system_of_calculation => 2
+  end
+end
+```
 
 ## Note on Patches / Pull Requests
 
