@@ -51,10 +51,10 @@ By default Attrio creates `#attributes` accessor which contains `Hash` of with a
 user = User.new
 user.attributes 
 # => {
-	:name=>#<Attrio::Attribute:0x007fc44e8ca680 @object=#<Class:0x007fc44e8b2b48>, @name="name", @type=String, @options={}, @writer_method_name="name=", @writer_visibility=:public, @instance_variable_name="@name", @reader_method_name="name", @reader_visibility=:public>,
-	:age=>#<Attrio::Attribute:0x007fc44e8d4c98 @object=#<Class:0x007fc44e8b2b48>, @name="age", @type=Attrio::Types::Integer, @options={}, @writer_method_name="age=", @writer_visibility=:public, @instance_variable_name="@age", @reader_method_name="age", @reader_visibility=:public>,
-	:birthday=>#<Attrio::Attribute:0x007fc44e8e2e38 @object=#<Class:0x007fc44e8b2b48>, @name="birthday", @type=Attrio::Types::DateTime, @options={}, @writer_method_name="birthday=", @writer_visibility=:public, @instance_variable_name="@birthday", @reader_method_name="birthday", @reader_visibility=:public>
-}
+#	:name => #<Attrio::Attribute:0x007fc44e8ca680 @object=#<Class:0x007fc44e8b2b48>, @name="name", @type=String, @options={}, @writer_method_name="name=", @writer_visibility=:public, @instance_variable_name="@name", @reader_method_name="name", @reader_visibility=:public>,
+#	:age => #<Attrio::Attribute:0x007fc44e8d4c98 @object=#<Class:0x007fc44e8b2b48>, @name="age", @type=Attrio::Types::Integer, @options={}, @writer_method_name="age=", @writer_visibility=:public, @instance_variable_name="@age", @reader_method_name="age", @reader_visibility=:public>,
+#	:birthday = >#<Attrio::Attribute:0x007fc44e8e2e38 @object=#<Class:0x007fc44e8b2b48>, @name="birthday", @type=Attrio::Types::DateTime, @options={}, @writer_method_name="birthday=", @writer_visibility=:public, @instance_variable_name="@birthday", @reader_method_name="birthday", @reader_visibility=:public>
+# }
 ```
 
 Accessor name can be easily overriden by passing `:as` option to `define_attributes` block.
