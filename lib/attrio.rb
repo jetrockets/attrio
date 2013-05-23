@@ -33,8 +33,8 @@ module Attrio
       EOS
 
       self.define_attrio_new(options[:as])
+      self.define_attrio_reset(options[:as])
       self.define_attrio_inspect(options[:as]) unless options[:inspect] == false
-      self.define_attrio_reset(options[:as]) unless options[:reset] == false
 
       Attrio::AttributesParser.new(self, options, &block)
     end
