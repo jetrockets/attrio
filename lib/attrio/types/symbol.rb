@@ -5,7 +5,8 @@ module Attrio
     class Symbol < Base
       def self.typecast(value, options = {})
         begin
-          value.underscore.to_sym
+          value = value.underscore if options[:underscore].present?
+          value.to_sym
         rescue NoMethodError => e
           nil
         end

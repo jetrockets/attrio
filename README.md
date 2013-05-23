@@ -76,6 +76,20 @@ user = User.new
 user.api_attributes # => {...}
 ```
 
+### Types
+
+Any Ruby class can be passed as type to Attrio. If this class responds to `typecast` and `typecasted?` methods then they will be called, else `new` will be called.
+
+```ruby
+class Klass
+  include Attrio
+	
+  define_attributes do  	
+  	attr :custom_attribute, CustomClass
+  end
+end
+```
+
 ### Built-in Types
 
 **Boolean**
@@ -86,13 +100,13 @@ By default boolean typecasts 'yes', '1', 1, 'true' as `TrueClass` and all other 
 class Klass
   include Attrio
 	
-  define_attributes :as => 'api_attributes' do
-  	attr :standard_attribute, Boolean
+  define_attributes do
+  	attr :boolean_attribute, Boolean
   	
-  	attr :custom_attribute, Boolean, :yes => ['ja', '1', 1]
-  	# attr :custom_attribute, Boolean, :yes_values => ['ja', '1', 1]
-  	# attr :custom_attribute, Boolean, :no => ['nein', '0', 0]
-  	# attr :custom_attribute, Boolean, :no_values => ['nein', '0', 0]
+  	attr :custom_boolean_attribute, Boolean, :yes => ['ja', '1', 1]
+  	# attr :custom_boolean_attribute, Boolean, :yes_values => ['ja', '1', 1]
+  	# attr :custom_boolean_attribute, Boolean, :no => ['nein', '0', 0]
+  	# attr :custom_boolean_attribute, Boolean, :no_values => ['nein', '0', 0]
   end
 end
 ```
@@ -105,7 +119,7 @@ These three class have similar behaviour and options. By passing `:format` optio
 class Klass
   include Attrio
 	
-  define_attributes :as => 'api_attributes' do
+  define_attributes do
   	attr :date_attribute, Date
   	attr :time_attribute, Time
   	attr :date_time_attribute, DateTime
@@ -123,7 +137,7 @@ Attribute will be typecasted using `to_f` method.
 class Klass
   include Attrio
 	
-  define_attributes :as => 'api_attributes' do
+  define_attributes do
   	attr :float_attribute, Float
   end
 end
@@ -139,7 +153,7 @@ Optional `:base` parameter can be passed, during the typecast attribute will be 
 class Klass
   include Attrio
 	
-  define_attributes :as => 'api_attributes' do
+  define_attributes do
   	attr :integer_attribute, Integer
   	attr :custom_integer_attribute, Integer, :base => 2
   end
@@ -147,6 +161,34 @@ end
 ```
 
 **Symbol**
+
+Attribute will be typecasted using `to_sym` method.
+
+If Optional `:underscore` parameter is passed, then attribute value will be downcased and underscored before calling `to_sym`. 
+
+```ruby
+class Klass
+  include Attrio
+	
+  define_attributes do
+  	attr :symbol_attribute, Symbol
+  	attr :custom_symbol_attribute, Symbol, :underscore => true
+  end
+end
+```
+
+## Inspect
+Attrio adds its own `#inspect` method when included to the class. This overridden method prints object attributes in easy to read manner. To disable this feature pass `:inspect => false` to `define_arguments` block.
+
+```ruby
+class Klass
+  include Attrio
+	
+  define_attributes :inspect => false do
+  	attr :attribute, Atring
+  end
+end
+```
 
 ## Note on Patches / Pull Requests
 
