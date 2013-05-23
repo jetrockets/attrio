@@ -185,7 +185,7 @@ class Klass
   include Attrio
 	
   define_attributes :inspect => false do
-  	attr :attribute, Atring
+  	attr :attribute, String
   end
 end
 ```
