@@ -9,13 +9,13 @@ module Attrio
         :reader
       end
 
-      def self.define_accessor(object, type, options)
-        unless object.method_defined?(options[:method_name])
-          object.send :define_method, options[:method_name] do            
+      def self.define_accessor(klass, type, options)
+        unless klass.method_defined?(options[:method_name])
+          klass.send :define_method, options[:method_name] do            
             self.instance_variable_get(options[:instance_variable_name])
           end
         
-          object.send options[:method_visibility], options[:method_name]
+          klass.send options[:method_visibility], options[:method_name]
         end        
       end      
     end

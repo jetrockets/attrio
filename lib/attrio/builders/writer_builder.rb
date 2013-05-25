@@ -9,14 +9,14 @@ module Attrio
         :writer
       end
 
-      def self.define_accessor(object, type, options)
-        unless object.method_defined?(options[:method_name])
-          object.send :define_method, options[:method_name] do |value|
+      def self.define_accessor(klass, type, options)
+        unless klass.method_defined?(options[:method_name])
+          klass.send :define_method, options[:method_name] do |value|
             value = type.respond_to?(:typecast) ? type._typecast(*[value, options]) : type.new(value) if !value.nil?
             self.instance_variable_set(options[:instance_variable_name], value)
           end
         
-          object.send options[:method_visibility], options[:method_name]
+          klass.send options[:method_visibility], options[:method_name]
         end        
       end      
     end

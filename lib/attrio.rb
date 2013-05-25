@@ -11,8 +11,7 @@ require 'attrio/core_ext/string'
 require 'attrio/core_ext/time'
 
 module Attrio
-  autoload :AttributesParser, 'attrio/attributes_parser'
-  autoload :Attribute, 'attrio/attribute'
+  autoload :AttributesParser, 'attrio/attributes_parser'  
   autoload :Initialize, 'attrio/initialize'
   autoload :Inspect, 'attrio/inspect'
   autoload :Reset, 'attrio/reset'
@@ -45,6 +44,9 @@ module Attrio
       Attrio::AttributesParser.cast_type(name) || super
     end    
   end
+
+  autoload :Attribute, 'attrio/attribute'
+  autoload :DefaultValue, 'attrio/default_value'
 
   module Builders
     autoload :ReaderBuilder, 'attrio/builders/reader_builder'
