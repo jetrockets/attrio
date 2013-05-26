@@ -14,7 +14,6 @@ describe Attrio::DefaultValue::Callable do
   end
 
   let(:object){ model.new }
-  let(:another_object){ model.new }
 
   let(:attribute){ mock('attribute')}
   let(:default_value){ mock('default_value')}
@@ -30,7 +29,9 @@ describe Attrio::DefaultValue::Callable do
     object.attribute.should be_instance_of(DateTime)  
   end
 
-  it "should be evaluate attribute value every time" do      
-    object.attribute.should < another_object.attribute
+  it "should be evaluate attribute value every time" do
+    another_object = model.new    
+
+    object.attribute.should_not be_equal(another_object.attribute)
   end
 end
