@@ -30,10 +30,9 @@ module Attrio
 
     def default_value
       if !defined?(@default_value)
-        @default_value = Attrio::DefaultValue.new(self.klass, (self.options[:default] || self.options[:default_value]))
+        @default_value = Attrio::DefaultValue.new(self.klass, self.name, (self.options[:default] || self.options[:default_value]))
       end
-
-      @default_value.is_a?(Attrio::DefaultValue::Base) ? @default_value.call() : @default_value      
+      @default_value      
     end
 
     def define_writer

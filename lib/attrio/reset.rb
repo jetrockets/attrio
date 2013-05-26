@@ -8,17 +8,24 @@ module Attrio
 
     module ClassMethods
       def define_attrio_reset(as)
-        define_method "reset_#{as.to_s}" do |attributes_to_reset = []|
-          attributes_to_reset = Array.wrap(attributes_to_reset).flatten          
-          attributes_to_reset = attributes_to_reset.empty? ? self.send(as.to_s).keys : self.send(as.to_s).keys & attributes_to_reset.map!(&:to_sym)
+        define_method "reset_#{as.to_s}" do |attributes = []|          
+          self.send(as.to_s, attributes).values.each{ |attribute| self.send(attribute.writer_method_name, nil) }
+          self.send("set_#{as.to_s}_defaults", attributes)
+        end  
 
-          attributes_to_reset.each do |attribute_name|
-            attribute = self.send(as.to_s)[attribute_name]
-            self.send(attribute.writer_method_name, attribute.default_value)            
-          end
+        define_method "reset_#{as.to_s}_defaults" do |attributes = []|
+          self.send(as.to_s, attributes).values.select(&:default_value).each { |attribute| self.send(attribute.writer_method_name, nil) }
+          self.send("set_#{as.to_s}_defaults", attributes)          
         end
 
-        self.send(:alias_method, "reset_#{as.to_s}!", "reset_#{as.to_s}")        
+        define_method "set_#{as.to_s}_defaults" do |attributes = []|
+          self.send(as.to_s, attributes).values.select(&:default_value).each do |attribute|
+            next if self.send(attribute.reader_method_name).present?
+
+            default_value = attribute.default_value.is_a?(Attrio::DefaultValue::Base) ? attribute.default_value.call(self) : attribute.default_value  
+            self.send(attribute.writer_method_name, default_value)
+          end          
+        end
       end
     end
   end

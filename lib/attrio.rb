@@ -17,20 +17,31 @@ module Attrio
   autoload :Reset, 'attrio/reset'
 
   def self.included(base)    
-    base.send(:include, Attrio::Initialize)
-    base.send(:include, Attrio::Inspect)
-    base.send(:include, Attrio::Reset)
+    base.send :include, Attrio::Initialize
+    base.send :include, Attrio::Inspect
+    base.send :include, Attrio::Reset
 
-    base.send(:extend, Attrio::ClassMethods)    
+    base.send :extend, Attrio::ClassMethods
   end
 
   module ClassMethods
     def define_attributes(options = {}, &block)
       options[:as] ||= :attributes
       
-      cattr_accessor options[:as].to_sym
-      class_eval(<<-EOS)
-        @@#{options[:as].to_s} ||= {}
+      # cattr_accessor options[:as].to_sym
+      class_eval(<<-EOS, __FILE__, __LINE__ + 1)
+        @@#{options[:as]} ||= {}
+
+        def self.#{options[:as]}(attributes = [])
+          attributes = Array.wrap(attributes).flatten
+          return @@#{options[:as]} if attributes.empty?
+
+          @@#{options[:as]}.slice(attributes.map { |attr| attr.to_sym })                    
+        end
+
+        def #{options[:as]}(attributes = [])
+          self.class.#{options[:as]}(attributes)
+        end
       EOS
 
       self.define_attrio_new(options[:as])

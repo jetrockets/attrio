@@ -8,8 +8,8 @@ module Attrio
     autoload :Symbol, 'attrio/default_value/symbol'
 
     class << self      
-      def new(object, value)
-        Attrio::DefaultValue::Base.handle(object, value) || value
+      def new(object, attribute, value)
+        Attrio::DefaultValue::Base.handle(object, attribute, value) || value
       end
     end
   end

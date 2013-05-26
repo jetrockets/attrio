@@ -24,16 +24,11 @@ describe Attrio do
         model.respond_to?(:attributes).should be_true
       end
 
-      it 'should respond_to attributes=' do
-        model.respond_to?(:attributes=).should be_true
-      end
-
       describe 'object' do
         let(:object) { model.new }
 
         it 'should respond_to reset_attributes' do
           object.respond_to?(:reset_attributes).should be_true
-          object.respond_to?(:reset_attributes!).should be_true
         end
       end
     end
@@ -52,16 +47,11 @@ describe Attrio do
         model.respond_to?(:model_attributes).should be_true
       end
 
-      it 'should respond_to model_attributes=' do
-        model.respond_to?(:model_attributes=).should be_true
-      end
-
       describe 'object' do
         let(:object) { model.new }
 
         it 'should respond_to reset_model_attributes' do
-          object.respond_to?(:reset_model_attributes).should be_true
-          object.respond_to?(:reset_model_attributes!).should be_true
+          object.respond_to?(:reset_model_attributes).should be_true          
         end
       end
     end

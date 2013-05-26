@@ -11,12 +11,12 @@ module Attrio
 
       # Evaluates the value via value#call
       #
-      # @param [Object] args
+      # @param [Object] instance
       #
       # @return [Object] evaluated value
       #
-      def call(*args)
-        self.value.call(*args)
+      def call(instance)
+        self.value.call(instance, self.attribute)
       end    
     end
   end
