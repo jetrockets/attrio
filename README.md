@@ -6,7 +6,7 @@
 
 # Attrio
 
-Attributes for plain Ruby objects. The goal is to provide an ability to define attributes for your models without reinventing the wheel all over again. Attrio doesn't have any third-party dependencies like Virtus or ActiveAttr and does not redefine any methods inside your class, unless you want it to.
+Attributes for plain Ruby objects. The goal is to provide an ability to define attributes for your models without reinventing the wheel all over again. Attrio doesn't have any third-party dependencies like [Virtus](https://github.com/solnic/virtus) or [ActiveAttr](https://github.com/cgriego/active_attr) and does not redefine any methods inside your class, unless you want it to.
 
 ## Installation
 
