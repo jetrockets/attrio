@@ -126,13 +126,13 @@ You can embed values in Attrio just like you do it in Virtus.
 ```ruby
 module MassAssignment
   def initialize(attributes = {})
-  self.attributes = attributes
+    self.attributes = attributes
   end
 
   def attributes=(attributes = {})
-  attributes.each do |attr,value|
+    attributes.each do |attr,value|
       self.send("#{attr}=", value) if self.respond_to?("#{attr}=")
-  end
+    end
   end
 end
 
@@ -141,7 +141,7 @@ class City
   include MassAssignment
 
   define_attributes do
-  attr :name, String
+    attr :name, String
   end
 end
 
@@ -150,9 +150,9 @@ class Address
   include MassAssignment
 
   define_attributes do
-  attr :street,  String
-  attr :zipcode, String
-  attr :city,    City
+    attr :street,  String
+    attr :zipcode, String
+    attr :city,    City
   end
 end
 
@@ -161,8 +161,8 @@ class User
   include MassAssignment
 
   define_attributes do
-  attr :name,    String
-  attr :address, Address
+    attr :name,    String
+    attr :address, Address
   end
 end
 
