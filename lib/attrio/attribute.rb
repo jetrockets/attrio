@@ -30,7 +30,7 @@ module Attrio
 
     def default_value
       if !defined?(@default_value)
-        @default_value = Attrio::DefaultValue.new(self.klass, self.name, (self.options[:default] || self.options[:default_value]))
+        @default_value = Attrio::DefaultValue.new(self.klass, self.name, self.options[:default])
       end
       @default_value      
     end

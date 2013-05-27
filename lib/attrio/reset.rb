@@ -14,12 +14,12 @@ module Attrio
         end  
 
         define_method "reset_#{as.to_s}_defaults" do |attributes = []|
-          self.send(as.to_s, attributes).values.select(&:default_value).each { |attribute| self.send(attribute.writer_method_name, nil) }
+          self.send(as.to_s, attributes).values.select{ |attribute| !attribute.default_value.nil? }.each { |attribute| self.send(attribute.writer_method_name, nil) }
           self.send("set_#{as.to_s}_defaults", attributes)          
         end
 
         define_method "set_#{as.to_s}_defaults" do |attributes = []|
-          self.send(as.to_s, attributes).values.select(&:default_value).each do |attribute|
+          self.send(as.to_s, attributes).values.select{ |attribute| !attribute.default_value.nil? }.each do |attribute|
             next if self.send(attribute.reader_method_name).present?
 
             default_value = attribute.default_value.is_a?(Attrio::DefaultValue::Base) ? attribute.default_value.call(self) : attribute.default_value  

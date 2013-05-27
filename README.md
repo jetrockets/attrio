@@ -78,31 +78,52 @@ user.api_attributes # => {...}
 
 ### Default values
 
-You can easily setup default values for your attributes by passing `:default` option to `attr` method.
+Attrio supports all the ways to setup default values that Virtus has.
 
 ```ruby
-class User
+class Page
   include Attrio
-	
+
   define_attributes do
-  	attr :name, String, :default => 'John Doe'
-    attr :age, Integer, :default => 18
-    attr :birthday, DateTime
+    attr :title, String
+
+    # default from a singleton value (integer in this case)
+    attr :views, Integer, :default => 0
+
+    # default from a singleton value (boolean in this case)
+    attr :published, Boolean, :default => false
+
+    # default from a callable object (proc in this case)
+    attr :slug, String, :default => lambda { |page, attribute| page.title.present? ? page.title.downcase.gsub(' ', '-') : nil }
+
+    # default from a method name as symbol
+    attr :editor_title, String,  :default => :default_editor_title
+  end
+  
+  def initialize(attributes = {})
+    self.attributes = attributes
+  end
+
+  def attributes=(attributes = {})
+    attributes.each do |attr,value|
+      self.send("#{attr}=", value) if self.respond_to?("#{attr}=")
+    end
+  end
+
+  def default_editor_title
+    if self.published?
+      title
+    else
+      title.present? ? "UNPUBLISHED: #{title}" : "UNPUBLISHED"
+    end    
   end
 end
-```
 
-```ruby
-user = User.new
-user.age
-# => 18
-user.name
-# => 'John Doe'
 ```
 
 ### Methods visibility
 
-Don't want your accessors to be public? This behaviour can be overridden easily. 
+Don't want your accessors to be public? Visibility can be overridden easily. 
 
 ```ruby
 class User
