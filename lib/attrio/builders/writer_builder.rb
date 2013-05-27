@@ -12,7 +12,14 @@ module Attrio
       def self.define_accessor(klass, type, options)
         unless klass.method_defined?(options[:method_name])
           klass.send :define_method, options[:method_name] do |value|
-            value = type.respond_to?(:typecast) ? type._typecast(*[value, options]) : type.new(value) if !value.nil?
+            if !value.nil?
+              value = if type.respond_to?(:typecast) && type.respond_to?(:typecasted?)
+                type.typecasted?(value) ? value : type.typecast(*[value, options])
+              else
+                type.new(value)
+              end
+            end
+            
             self.instance_variable_set(options[:instance_variable_name], value)
           end
         

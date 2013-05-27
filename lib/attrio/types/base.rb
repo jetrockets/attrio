@@ -9,10 +9,6 @@ module Attrio
         raise NotImplementedError
       end
 
-      def self._typecast(value, options = {})
-        self.typecasted?(value) ? value : self.typecast(value, options)
-      end
-
       def self.typecasted?(value)
         false
       end
