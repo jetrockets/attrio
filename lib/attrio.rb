@@ -3,7 +3,6 @@
 require 'attrio/version'
 
 require 'attrio/core_ext/array'
-require 'attrio/core_ext/class'
 require 'attrio/core_ext/hash'
 require 'attrio/core_ext/nil_object'
 require 'attrio/core_ext/object'
