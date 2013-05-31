@@ -10,7 +10,7 @@ module Attrio
       else
         [object]
       end
-    end unless method_defined?(:wrap)
+    end
     
     # note that returning hash without symbolizing anything
     # does not cause this to fail
@@ -20,7 +20,7 @@ module Attrio
         new_hash
       end
       hash
-    end unless method_defined?(:symbolize_keys)
+    end
     
   end
 end
