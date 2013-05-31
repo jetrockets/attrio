@@ -11,5 +11,16 @@ module Attrio
         [object]
       end
     end unless method_defined?(:wrap)
+    
+    # note that returning hash without symbolizing anything
+    # does not cause this to fail
+    def symbolize_hash_keys(hash)
+      hash.inject({}) do |new_hash, (key, value)|
+        new_hash[(key.to_sym rescue key) || key] = value
+        new_hash
+      end
+      hash
+    end unless method_defined?(:symbolize_keys)
+    
   end
 end
