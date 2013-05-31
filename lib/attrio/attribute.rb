@@ -5,7 +5,7 @@ module Attrio
     attr_reader :klass, :name, :type, :options
 
     def initialize(klass, name, type, options)
-      @klass = klass; @name = name; @type = type; @options = options.symbolize_keys   
+      @klass = klass; @name = name; @type = type; @options = Helpers.symbolize_hash_keys(options)
     end
 
     def reader_method_name

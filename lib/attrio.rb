@@ -2,21 +2,18 @@
 
 require 'attrio/version'
 
-require 'attrio/core_ext/array'
-require 'attrio/core_ext/class'
 require 'attrio/core_ext/hash'
-require 'attrio/core_ext/nil_object'
 require 'attrio/core_ext/object'
 require 'attrio/core_ext/string'
-require 'attrio/core_ext/time'
 
 module Attrio
-  autoload :AttributesParser, 'attrio/attributes_parser'  
+  autoload :AttributesParser, 'attrio/attributes_parser'
   autoload :Initialize, 'attrio/initialize'
   autoload :Inspect, 'attrio/inspect'
   autoload :Reset, 'attrio/reset'
+  autoload :Helpers, 'attrio/helpers'
 
-  def self.included(base)    
+  def self.included(base)
     base.send :include, Attrio::Initialize
     base.send :include, Attrio::Inspect
     base.send :include, Attrio::Reset
@@ -27,16 +24,16 @@ module Attrio
   module ClassMethods
     def define_attributes(options = {}, &block)
       options[:as] ||= :attributes
-      
+
       # cattr_accessor options[:as].to_sym
       class_eval(<<-EOS, __FILE__, __LINE__ + 1)
         @@#{options[:as]} ||= {}
 
         def self.#{options[:as]}(attributes = [])
-          attributes = Array.wrap(attributes).flatten
+          attributes = Helpers.to_a(attributes).flatten
           return @@#{options[:as]} if attributes.empty?
 
-          @@#{options[:as]}.slice(attributes.map { |attr| attr.to_sym })                    
+          @@#{options[:as]}.slice(attributes.map { |attr| attr.to_sym })
         end
 
         def #{options[:as]}(attributes = [])
@@ -53,7 +50,7 @@ module Attrio
 
     def const_missing(name)
       Attrio::AttributesParser.cast_type(name) || super
-    end    
+    end
   end
 
   autoload :Attribute, 'attrio/attribute'

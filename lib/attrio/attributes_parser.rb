@@ -14,7 +14,7 @@ module Attrio
     end
 
     def attr(*args)
-      attribute_options = args.extract_options!
+      attribute_options = (args.last.kind_of?(Hash) ? args.pop : Hash.new)
       attribute_name = args[0].to_s
 
       type = self.class.cast_type(attribute_options.delete(:type) || args[1])      
