@@ -11,7 +11,7 @@ module Attrio
   autoload :Initialize, 'attrio/initialize'
   autoload :Inspect, 'attrio/inspect'
   autoload :Reset, 'attrio/reset'
-  autoload :Utility, 'attrio/utility'
+  autoload :Helpers, 'attrio/helpers'
 
   def self.included(base)
     base.send :include, Attrio::Initialize
@@ -30,7 +30,7 @@ module Attrio
         @@#{options[:as]} ||= {}
 
         def self.#{options[:as]}(attributes = [])
-          attributes = Utility.to_a(attributes).flatten
+          attributes = Helpers.to_a(attributes).flatten
           return @@#{options[:as]} if attributes.empty?
 
           @@#{options[:as]}.slice(attributes.map { |attr| attr.to_sym })

@@ -8,9 +8,9 @@ module Attrio
         false_values = options[:false] || options[:false_values]
 
         if false_values.present?
-          return Utility.to_a(false_values).flatten.include?(value) ? false : true
+          return Helpers.to_a(false_values).flatten.include?(value) ? false : true
         else
-          return Utility.to_a(true_values).flatten.include?(value) ? true : false
+          return Helpers.to_a(true_values).flatten.include?(value) ? true : false
         end
       end
 

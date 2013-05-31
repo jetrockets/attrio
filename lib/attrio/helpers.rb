@@ -1,5 +1,5 @@
 module Attrio
-  module Utility
+  module Helpers
     extend self
 
     def to_a(object)
@@ -11,7 +11,7 @@ module Attrio
         [object]
       end
     end
-    
+
     # note that returning hash without symbolizing anything
     # does not cause this to fail
     def symbolize_hash_keys(hash)
@@ -21,6 +21,6 @@ module Attrio
       end
       hash
     end
-    
+
   end
 end
