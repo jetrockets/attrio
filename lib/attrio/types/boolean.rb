@@ -8,10 +8,10 @@ module Attrio
         false_values = options[:false] || options[:false_values]
 
         if false_values.present?
-          return Array.wrap(false_values).flatten.include?(value) ? false : true
+          return Utility.to_a(false_values).flatten.include?(value) ? false : true
         else
-          return Array.wrap(true_values).flatten.include?(value) ? true : false
-        end        
+          return Utility.to_a(true_values).flatten.include?(value) ? true : false
+        end
       end
 
       def self.typecasted?(value)

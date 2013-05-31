@@ -2,7 +2,6 @@
 
 require 'attrio/version'
 
-require 'attrio/core_ext/array'
 require 'attrio/core_ext/hash'
 require 'attrio/core_ext/nil_object'
 require 'attrio/core_ext/object'
@@ -14,6 +13,7 @@ module Attrio
   autoload :Initialize, 'attrio/initialize'
   autoload :Inspect, 'attrio/inspect'
   autoload :Reset, 'attrio/reset'
+  autoload :Utility, 'attrio/utility'
 
   def self.included(base)    
     base.send :include, Attrio::Initialize
@@ -32,7 +32,7 @@ module Attrio
         @@#{options[:as]} ||= {}
 
         def self.#{options[:as]}(attributes = [])
-          attributes = Array.wrap(attributes).flatten
+          attributes = Utility.to_a(attributes).flatten
           return @@#{options[:as]} if attributes.empty?
 
           @@#{options[:as]}.slice(attributes.map { |attr| attr.to_sym })                    

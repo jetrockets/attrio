@@ -1,8 +1,8 @@
-# encoding: utf-8
+module Attrio
+  module Utility
+    extend self
 
-class Array # :nodoc:
-  class << self
-    def wrap(object)
+    def to_a(object)
       if object.nil?
         []
       elsif object.respond_to?(:to_ary)
