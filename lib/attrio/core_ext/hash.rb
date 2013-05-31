@@ -25,10 +25,6 @@ class Hash # :nodoc:
     return hash
   end unless method_defined?(:symbolize_keys!)
 
-  def extractable_options?
-    instance_of?(Hash)
-  end unless method_defined?(:extractable_options?)
-
   def slice(*keys)
     keys = keys.map! { |key| convert_key(key) } if respond_to?(:convert_key, true)
     hash = self.class.new
