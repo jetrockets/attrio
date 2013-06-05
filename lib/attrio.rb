@@ -2,7 +2,6 @@
 
 require 'attrio/version'
 
-require 'attrio/core_ext/hash'
 require 'attrio/core_ext/object'
 require 'attrio/core_ext/string'
 
@@ -25,7 +24,6 @@ module Attrio
     def define_attributes(options = {}, &block)
       options[:as] ||= :attributes
 
-      # cattr_accessor options[:as].to_sym
       class_eval(<<-EOS, __FILE__, __LINE__ + 1)
         @@#{options[:as]} ||= {}
 
@@ -33,7 +31,8 @@ module Attrio
           attributes = Helpers.to_a(attributes).flatten
           return @@#{options[:as]} if attributes.empty?
 
-          @@#{options[:as]}.slice(attributes.map { |attr| attr.to_sym })
+          attributes = @@#{options[:as]}.keys & attributes
+          @@#{options[:as]}.select{ |k,v| attributes.include?(k) }          
         end
 
         def #{options[:as]}(attributes = [])
