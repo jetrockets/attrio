@@ -37,7 +37,7 @@ class User
   end
 end
 ```
-
+### Accessing attributes
 By default Attrio defines `#attributes` accessor which contains `Hash` with attributes names as keys and instances of `Attrio::Attribute` as values. Each instance of `Attrio::Attribute` contains following information:
  * type
  * writer method name
@@ -55,6 +55,15 @@ user.attributes
 #	:age => #<Attrio::Attribute:0x007fc44e8d4c98 @object=#<User:0x007fc44e8b2b48>, @name="age", @type=Attrio::Types::Integer, @options={}, @writer_method_name="age=", @writer_visibility=:public, @instance_variable_name="@age", @reader_method_name="age", @reader_visibility=:public>,
 #	:birthday = >#<Attrio::Attribute:0x007fc44e8e2e38 @object=#<User:0x007fc44e8b2b48>, @name="birthday", @type=Attrio::Types::DateTime, @options={}, @writer_method_name="birthday=", @writer_visibility=:public, @instance_variable_name="@birthday", @reader_method_name="birthday", @reader_visibility=:public>
 # }
+user.attributes.keys
+# => [:name, :age, :birthday]
+```
+
+Attributes can be filtered.
+
+```ruby
+user.attributes([:name, :age, :not_existing_attribute]).keys
+# => [:name, :age]
 ```
 
 Accessor name can be easily overridden by passing `:as` option to `define_attributes` block.

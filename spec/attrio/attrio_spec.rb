@@ -44,6 +44,10 @@ describe Attrio do
           subject.attributes(:name).keys.should match_array([:name])
           subject.attributes([:name]).keys.should match_array([:name])
         end
+
+        it 'should return a blank set of attributes for not existing filter' do          
+          subject.attributes([:not_existing_attribute]).keys.should match_array([])
+        end
       end
     end
   end
