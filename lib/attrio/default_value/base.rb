@@ -3,20 +3,20 @@
 module Attrio
   module DefaultValue
     class Base
-      attr_reader :klass, :attribute, :value
+      attr_reader :attribute, :value
 
-      def self.handle(klass, attribute, value)
+      def self.handle(attribute, value)
         handler = [
           Attrio::DefaultValue::Callable,
           Attrio::DefaultValue::Clonable,
           Attrio::DefaultValue::Symbol
         ].detect{ |handler| handler.handle?(value) }
 
-        handler.new(klass, attribute, value) if handler.present?
+        handler.new(attribute, value) if handler.present?
       end
 
-      def initialize(klass, attribute, value)
-        @klass = klass; @attribute = attribute; @value = value;
+      def initialize(attribute, value)
+        @attribute = attribute; @value = value;
       end
 
       # Evaluates the value      

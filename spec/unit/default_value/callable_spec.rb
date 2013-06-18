@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Attrio::DefaultValue::Callable do
-  subject { described_class.new(object, attribute, default_value) }
+  subject { described_class.new(attribute, default_value) }
 
   let(:model) do
     Class.new do
