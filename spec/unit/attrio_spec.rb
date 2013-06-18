@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Attrio do  
   let(:model) do
     attributes_name = self.respond_to?(:attributes_name) ? self.attributes_name : 'attributes'
+    
     Class.new do 
       include Attrio
 

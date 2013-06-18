@@ -23,16 +23,22 @@ module Attrio
   module ClassMethods
     def define_attributes(options = {}, &block)
       options[:as] ||= :attributes
+      
+      class_eval(<<-EOS, __FILE__, __LINE__ + 1)        
+        @#{options[:as]} ||= {}
 
-      class_eval(<<-EOS, __FILE__, __LINE__ + 1)
-        @@#{options[:as]} ||= {}
+        class << self
+          def #{options[:as]}(attributes = [])
+            attributes = Helpers.to_a(attributes).flatten
+            return @#{options[:as]} if attributes.empty?
 
-        def self.#{options[:as]}(attributes = [])
-          attributes = Helpers.to_a(attributes).flatten
-          return @@#{options[:as]} if attributes.empty?
+            attributes = @#{options[:as]}.keys & attributes
+            @#{options[:as]}.select{ |k,v| attributes.include?(k) }          
+          end
 
-          attributes = @@#{options[:as]}.keys & attributes
-          @@#{options[:as]}.select{ |k,v| attributes.include?(k) }          
+          def inherited(subclass)          
+            subclass.instance_variable_set("@#{options[:as]}", instance_variable_get("@#{options[:as]}").dup)
+          end
         end
 
         def #{options[:as]}(attributes = [])
