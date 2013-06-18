@@ -29,10 +29,26 @@ describe 'Attributes inheritance' do
   end
 
   context 'Classes should inherit attributes' do
-    subject { ChildWithoutAttributes.attributes }
+    context "without attributes" do
+      subject { ChildWithoutAttributes.attributes }
 
-    it do
-      should match_hash(Parent.attributes)
+      it "should equal to parent's attributes" do
+        should == Parent.attributes
+      end
+    end
+
+    context "with new attributes" do
+      subject { ChildWithNewAttributes.attributes }
+
+      it "should include parent's attributes" do
+        should include(Parent.attributes)
+      end
+    end
+
+    context "with overriden attributes" do
+      subject { ChildWithOverridenAttributes.attributes }
+
+      pending "should include not overriden attributes"
     end
   end
 end

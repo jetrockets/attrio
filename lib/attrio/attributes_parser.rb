@@ -4,8 +4,8 @@ module Attrio
   class AttributesParser
     attr_reader :klass, :options
 
-    def initialize(object, options, &block)
-      @object = object
+    def initialize(klass, options, &block)
+      @klass = klass
       @options = options
 
       raise ArgumentError.new('Missing options[:as] value' ) if @options[:as].blank?
@@ -20,7 +20,7 @@ module Attrio
       type = self.class.cast_type(attribute_options.delete(:type) || args[1])      
       self.class.const_missing(attribute_options.delete(:type).to_s || args[1].to_s) if type.blank?
 
-      attribute = Attrio::Attribute.new(@object, attribute_name, type, attribute_options).define_writer.define_reader
+      attribute = Attrio::Attribute.new(@klass, attribute_name, type, attribute_options).define_writer.define_reader
       self.add_attribute(attribute_name, attribute)
     end
 
@@ -50,7 +50,7 @@ module Attrio
     end
 
     def add_attribute(name, attribute)
-      @object.send(self.as)[name.to_sym] = attribute
+      @klass.send(self.as)[name.to_sym] = attribute
     end        
   end
 end
