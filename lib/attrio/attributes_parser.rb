@@ -24,6 +24,8 @@ module Attrio
       self.add_attribute(attribute_name, attribute)
     end
 
+    alias_method :attribute, :attr
+
     def self.cast_type(constant)
       return constant if constant.is_a?(Class) && !!(constant < Attrio::Types::Base)
 
