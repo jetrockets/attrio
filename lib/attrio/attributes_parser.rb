@@ -20,7 +20,7 @@ module Attrio
       type = self.class.cast_type(attribute_options.delete(:type) || args[1])      
       self.class.const_missing(attribute_options.delete(:type).to_s || args[1].to_s) if type.blank?
 
-      attribute = Attrio::Attribute.new(@klass, attribute_name, type, attribute_options).define_writer.define_reader
+      attribute = Attrio::Attribute.new(attribute_name, type, attribute_options).define_writer(@klass).define_reader(@klass)
       self.add_attribute(attribute_name, attribute)
     end
 

@@ -2,10 +2,10 @@
 
 module Attrio
   class Attribute
-    attr_reader :klass, :name, :type, :options
+    attr_reader :name, :type, :options
 
-    def initialize(klass, name, type, options)
-      @klass = klass; @name = name; @type = type; @options = Helpers.symbolize_hash_keys(options)
+    def initialize(name, type, options)
+      @name = name; @type = type; @options = Helpers.symbolize_hash_keys(options)
     end
 
     def reader_method_name
@@ -35,8 +35,8 @@ module Attrio
       @default_value      
     end
 
-    def define_writer
-      Attrio::Builders::WriterBuilder.define(self.klass, self.type,
+    def define_writer(klass)
+      Attrio::Builders::WriterBuilder.define(klass, self.type,
         self.options.merge({
           :method_name => self.writer_method_name,
           :method_visibility => self.writer_visibility,
@@ -46,8 +46,8 @@ module Attrio
       self
     end
 
-    def define_reader
-      Attrio::Builders::ReaderBuilder.define(self.klass, self.type,
+    def define_reader(klass)
+      Attrio::Builders::ReaderBuilder.define(klass, self.type,
         self.options.merge({
           :method_name => self.reader_method_name,
           :method_visibility => self.reader_visibility,
