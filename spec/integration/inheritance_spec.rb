@@ -48,7 +48,17 @@ describe 'Attributes inheritance' do
     context "with overriden attributes" do
       subject { ChildWithOverridenAttributes.attributes }
 
-      pending "should include not overriden attributes"
+      it "should include not overriden attributes" do
+        should include(Parent.attributes.reject { |k| k == :name })
+      end
+
+      it "should include overriden attributes" do
+        should include(:name)
+      end
+
+      it "should include overriden attributes with corect options" do
+        subject[:name].type.should == Attrio::Types::Symbol
+      end
     end
   end
 end
