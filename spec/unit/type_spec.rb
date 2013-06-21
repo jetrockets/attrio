@@ -7,11 +7,11 @@ describe Attrio::Types::Base do
 
       define_attributes do
         attr :type_as_constant, Integer
-        attr :type_in_options_as_constant, Integer
+        attr :type_in_options_as_constant, :type => Integer
         attr :type_as_string, 'integer'
-        attr :type_in_options_as_string, 'integer'
+        attr :type_in_options_as_string, :type => 'integer'
         attr :type_as_symbol, :integer
-        attr :type_in_options_as_symbol, :integer
+        attr :type_in_options_as_symbol, :type => :integer
       end
     end
   end
