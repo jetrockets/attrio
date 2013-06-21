@@ -14,14 +14,14 @@ module Attrio
     end
 
     def attr(*args)
-      attribute_options = (args.last.kind_of?(Hash) ? args.pop : Hash.new)
       attribute_name = args[0].to_s
+      attribute_options = (args.last.kind_of?(Hash) ? args.pop : Hash.new)
+      attribute_type = self.fetch_type(attribute_options.delete(:type) || args[1])
 
-      type = self.class.cast_type(attribute_options.delete(:type) || args[1])      
-      self.class.const_missing(attribute_options.delete(:type).to_s || args[1].to_s) if type.blank?
-
-      attribute = Attrio::Attribute.new(attribute_name, type, attribute_options).define_writer(@klass).define_reader(@klass)
+      attribute = self.create_attribute(attribute_name, attribute_type, attribute_options)
       self.add_attribute(attribute_name, attribute)
+
+      self
     end
 
     alias_method :attribute, :attr
@@ -49,6 +49,19 @@ module Attrio
 
     def as
       self.options[:as]
+    end
+
+    def fetch_type(name)
+      return if name.nil?
+
+      type = self.class.cast_type(name)
+      self.class.const_missing(name.to_s) if type.blank?
+
+      type
+    end
+
+    def create_attribute(name, type, options)
+      Attrio::Attribute.new(name, type, options).define_writer(self.klass).define_reader(self.klass)
     end
 
     def add_attribute(name, attribute)
