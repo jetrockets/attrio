@@ -24,7 +24,7 @@ Or install it yourself as:
 
 ## Usage
 
-Include Attrio into your class and then use `#define_attributes` block to declare you attributes.
+Include Attrio into your class and then use `#define_attributes` block to declare your attributes and collections.
 
 ```ruby
 class User
@@ -34,6 +34,8 @@ class User
   	attr :name, String
     attr :age, Integer
     attr :birthday, DateTime
+    collection :roles, Symbol, unique: true
+    collection :pictures, UserPicture
   end
 end
 ```
@@ -72,10 +74,12 @@ Accessor name can be easily overridden by passing `:as` option to `define_attrib
 class User
   include Attrio
 	
-  define_attributes :as => 'api_attributes' do
+  define_attributes :as => 'api_attributes', collection_as: 'api_collections' do
   	attr :name, String
     attr :age, Integer
     attr :birthday, DateTime
+    collection :roles, Symbol
+    collection :pictures, UserPicture, unique: true, index: :filename
   end
 end
 ```
@@ -84,6 +88,31 @@ end
 user = User.new
 user.api_attributes # => {...}
 ```
+
+### Accessing Collections
+By default Attrio defines `#collections` accessor which contains `Hash` with collection names as keys and instances of `Attrio::Collection` as values.  Each instance of `Attrio::Collection` contains the following information:
+ * type
+ * collection reader name
+ * collection reader visibility
+ * add element method name
+ * add element method visibility
+ * find element method name
+ * find element method visibility
+ * instance variable name
+ * additional options
+
+```ruby
+user = User.new
+user.collections
+# => {
+#     :roles => #<Attrio::Collection:0x007fc44defa680 @name='roles', @type=Symbol, @options={}, @collection_reader_name="roles", @collection_reader_visibility=:pubic, @add_element_name='add_role',@add_element_visibility=:public, @find_element_name='find_role', @find_element_name=:private, @instance_variable_name='@roles'>
+#     :pictures => #<Attrio::Collection:0x007f322efa680 @name='pcitures', @type=UserPicture, @options={:unique => true, :index => :filename}, @collection_reader_name="pictures", @collection_reader_visibility=:pubic, @add_element_name='add_picture',@add_element_visibility=:public, @find_element_name='find_picture', @find_element_name=:public, @instance_variable_name='@pictures'>
+# }
+user.collections.keys
+# => [:roles, :pictures]
+```
+
+Collections with a truthy option :unique (and no :index), are created as sets.  Collections with a truthy option :unique and a :index set are created as a hash using the value returned by the method defined as :index as a key and the object as a hash.  Collections without a truthy :unique options are created as an array
 
 ### Default values
 

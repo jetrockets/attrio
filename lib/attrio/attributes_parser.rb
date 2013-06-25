@@ -26,6 +26,14 @@ module Attrio
 
     alias_method :attribute, :attr
 
+    def collection(*args)
+      collection_name = args[0].to_s
+      collection_options = args.last.kind_of?(Hash) ? args.pop : Hash.new
+      collection_type = self.fetch_type(collection_options.delete(:type) || args[1])
+
+      collection_container_type = self.fetch_container_type(options)
+    end
+
     def self.cast_type(constant)
       return constant if constant.is_a?(Class) && !!(constant < Attrio::Types::Base)
 
@@ -60,8 +68,21 @@ module Attrio
       type
     end
 
+    def fetch_container_type(options)
+      if options.fetch(:unique, false)
+        return options.fetch(:index,false) ? Hash : Set
+      else
+        return Array
+      end
+    end
+
     def create_attribute(name, type, options)
       Attrio::Attribute.new(name, type, options).define_writer(self.klass).define_reader(self.klass)
+    end
+
+    def create_collection(name, container, type, options)
+      #TODO chain define_? calls when those are determined
+      Attrio::Collection.new(name, container, type, options)
     end
 
     def add_attribute(name, attribute)
