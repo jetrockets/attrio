@@ -12,7 +12,7 @@ module Attrio
       def self.define_accessor(klass, type, options)
         unless klass.method_defined?(options[:method_name])
           if type.present?
-            self.define_typecasted_method(klass, type, options)
+            self.define_typecasting_method(klass, type, options)
           else
             klass.send :attr_writer, options[:method_name].chop
           end
@@ -21,13 +21,13 @@ module Attrio
         end        
       end      
 
-      def self.define_typecasted_method(klass, type, options)
+      def self.define_typecasting_method(klass, type, options)
         klass.send :define_method, options[:method_name] do |value|
           if !value.nil?
             value = if type.respond_to?(:typecast) && type.respond_to?(:typecasted?)
               type.typecasted?(value) ? value : type.typecast(*[value, options])
             else
-              type.new(value)
+              type == Hash && value.is_a?(Hash) ? value : type.new(value)
             end
           end
 
