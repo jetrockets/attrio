@@ -12,6 +12,11 @@ module Attrio
   autoload :Reset, 'attrio/reset'
   autoload :Helpers, 'attrio/helpers'
   autoload :AttributeBase, 'attrio/attribute_base'
+  module Collection
+    autoload :Array, 'attrio/collection/array'
+    autoload :Hash, 'attrio/collection/hash'
+    autoload :Set, 'attrio/collection/set'
+  end
 
   def self.included(base)
     base.send :include, Attrio::Initialize
