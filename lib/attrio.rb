@@ -11,6 +11,7 @@ module Attrio
   autoload :Inspect, 'attrio/inspect'
   autoload :Reset, 'attrio/reset'
   autoload :Helpers, 'attrio/helpers'
+  autoload :AttributeBase, 'attrio/attribute_base'
 
   def self.included(base)
     base.send :include, Attrio::Initialize
