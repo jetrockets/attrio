@@ -2,7 +2,12 @@
 module Attrio
   module Collection
     class Set < DelegateClass(::Set)
-      def initialize
+      include Attrio::Readable
+      include Attrio::Collectable
+decided
+
+      def initialize(name, type, options)
+        @name = name; @type = type, @options = Helpers.symbolize_hash_keys(options)
         @collection = ::Set.new
         super(@collection)
       end

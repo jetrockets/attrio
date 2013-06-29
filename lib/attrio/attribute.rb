@@ -4,8 +4,6 @@ module Attrio
   class Attribute
     include ::Attrio::Readable
 
-    attr_reader :name, :type, :options
-
     def initialize(name, type, options)
       @name = name; @type = type; @options = Helpers.symbolize_hash_keys(options)
     end
@@ -19,14 +17,12 @@ module Attrio
       @writer_visibility ||= self.accessor_name_from_options(:writer) || :public
     end
 
-
     def default_value
       if !defined?(@default_value)
         @default_value = Attrio::DefaultValue.new(self.name, self.options[:default])
       end
       @default_value
     end
-
 
     def define_writer(klass)
       Attrio::Builders::WriterBuilder.define(klass, self.type,

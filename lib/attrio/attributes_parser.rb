@@ -82,7 +82,7 @@ module Attrio
 
     def create_collection(name, container, type, options)
       #TODO chain define_? calls when those are determined
-      Attrio::Collection.new(name, container, type, options)
+      Attrio::Collectable.new(name, container, type, options)
     end
 
     def add_attribute(name, attribute)
