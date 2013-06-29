@@ -2,7 +2,7 @@
 
 module Attrio
   class Attribute
-    include ::Attrio::AttributeBase
+    include ::Attrio::Readable
 
     attr_reader :name, :type, :options
 

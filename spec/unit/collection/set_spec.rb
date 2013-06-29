@@ -6,6 +6,5 @@ describe Attrio::Collection::Set do
     it{a.should be}
     it{ a.should be_kind_of Set}
     it{ a.add(1);a.to_a.should eq [1]}
-
   end
 end

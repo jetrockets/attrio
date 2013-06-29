@@ -1,8 +1,8 @@
 module Attrio
-  module AttributeBase
+  module Readable
 
     def self.included(base)
-      base.send(:include, Attrio::AttributeBase::InstanceMethods)
+      base.send(:include, Attrio::Readable::InstanceMethods)
     end
 
     module InstanceMethods

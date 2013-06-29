@@ -11,7 +11,7 @@ module Attrio
   autoload :Inspect, 'attrio/inspect'
   autoload :Reset, 'attrio/reset'
   autoload :Helpers, 'attrio/helpers'
-  autoload :AttributeBase, 'attrio/attribute_base'
+  autoload :Readable, 'attrio/readable'
   module Collection
     autoload :Array, 'attrio/collection/array'
     autoload :Hash, 'attrio/collection/hash'
