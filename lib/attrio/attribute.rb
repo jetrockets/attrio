@@ -8,7 +8,6 @@ module Attrio
       @name = name; @type = type; @options = Helpers.symbolize_hash_keys(options)
     end
 
-
     def writer_method_name
       @writer_method_name ||= self.accessor_name_from_options(:writer) || "#{self.name}="
     end
