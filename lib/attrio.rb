@@ -12,11 +12,7 @@ module Attrio
   autoload :Reset, 'attrio/reset'
   autoload :Helpers, 'attrio/helpers'
   autoload :Readable, 'attrio/readable'
-  module Collection
-    autoload :Array, 'attrio/collection/array'
-    autoload :Hash, 'attrio/collection/hash'
-    autoload :Set, 'attrio/collection/set'
-  end
+  autoload :Collectable, 'attrio/collectable'
 
   def self.included(base)
     base.send :include, Attrio::Initialize
@@ -82,4 +78,11 @@ module Attrio
     autoload :Symbol, 'attrio/types/symbol'
     autoload :Time, 'attrio/types/time'
   end
+
+  module Collection
+    autoload :Array, 'attrio/collection/array'
+    autoload :Hash, 'attrio/collection/hash'
+    autoload :Set, 'attrio/collection/set'
+  end
+
 end
