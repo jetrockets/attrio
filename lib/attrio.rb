@@ -80,9 +80,10 @@ module Attrio
   end
 
   module Collections
-    autoload :Array, 'attrio/collection/array'
-    autoload :Hash, 'attrio/collection/hash'
-    autoload :Set, 'attrio/collection/set'
+    autoload :Common, 'attrio/collections/common'
+    autoload :Array, 'attrio/collections/array'
+    autoload :Hash, 'attrio/collections/hash'
+    autoload :Set, 'attrio/collections/set'
   end
 
 end

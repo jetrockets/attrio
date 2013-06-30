@@ -7,7 +7,7 @@ describe Attrio::Collection::Set do
     begin
       old_verbose, $VERBOSE = $VERBOSE, nil #shutting off warnings for this block
       #generates warning: toplevel constant Set referenced by Attrio::Collection::Set
-      Attrio::Collections::Set.new
+      Attrio::Collections::Set.new(Object, {})
     ensure
       $VERBOSE = old_verbose
     end
