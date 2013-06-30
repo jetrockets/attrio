@@ -1,7 +1,10 @@
 module Attrio
   module Collections
     class Array < DelegateClass(Array)
-      def initialize
+      include Attrio::Collections::Common
+
+      def initialize(type, options)
+        @type       = type, @options = options
         @collection = []
         super(@collection)
       end

@@ -3,12 +3,13 @@
 module Attrio
   module Collections
     class Hash < DelegateClass(Hash)
+      include Attrio::Collections::Common
+
       attr_reader :type, :key_method, :options
 
-      def initialize(type,options = {})
-        @type = type
+      def initialize(type, options = {})
+        @type       = type; @options = options
         @key_method = options[:key_method] || :hash
-        @options = options
         @collection = {}
         super(@collection)
         self
@@ -19,25 +20,12 @@ module Attrio
         #TODO should we raise our own exception if any value is not of correct type?
         values.each do |new_val|
           next if new_val.nil?
-          value = type_cast(new_val)
+          value            = type_cast(new_val)
           #TODO should there be functionality to address assigning a new value to an existing key?
-          key = value.send(key_method)
+          key              = value.send(key_method)
           @collection[key] = value
         end
         @collection
-      end
-
-      def kind_of?(klass)
-        return true if klass == ::Hash
-        super(klass)
-      end
-
-      def type_cast(value)
-        if type.respond_to?(:typecast) && type.respond_to?(:typecasted?)
-          type.typecasted?(value) ? value : type.typecast(*[value, options])
-        else
-          type.new(value)
-        end
       end
     end
   end
