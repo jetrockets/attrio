@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Attrio::Readable do
-  let(:collection){Attrio::Collection::Hash.new(:test, Fixnum, {})}
+  let(:collection){Attrio::Attribute.new(:test, Fixnum, {})}
   let(:target_class){Class.new}
   context "common methods" do
     it{collection.reader_method_name.should eq :test}

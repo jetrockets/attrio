@@ -68,21 +68,12 @@ module Attrio
       type
     end
 
-    def fetch_container_type(options)
-      if options.fetch(:unique, false)
-        return options.fetch(:index,false) ? Hash : Set
-      else
-        return Array
-      end
-    end
-
     def create_attribute(name, type, options)
       Attrio::Attribute.new(name, type, options).define_writer(self.klass).define_reader(self.klass)
     end
 
-    def create_collection(name, container, type, options)
-      #TODO chain define_? calls when those are determined
-      Attrio::Collectable.new(name, container, type, options)
+    def create_collection(name, type, options)
+      Attrio::Collection.new(name, type, options).define_collection(self.klass)
     end
 
     def add_attribute(name, attribute)
