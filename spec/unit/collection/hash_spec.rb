@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Attrio::Collections::Hash, focus: true do
+describe Attrio::Collections::Hash do
   context "Basic properties" do
     let(:collection) do
       begin
@@ -57,4 +57,27 @@ describe Attrio::Collections::Hash, focus: true do
       collection.values.last.should be_a Pathname
     end
   end
+
+  describe "#has_element(key)" do
+    let(:collection) do
+      c = Attrio::Collections::Hash.new(String, key_method: :chr)
+      c.add_element("test","foo","bar")
+      c
+    end
+    it{collection.has_element?("test").should be_false}
+    it{collection.has_element?("f").should be_true}
+    it{collection.has_element?(0).should be_false}
+  end
+
+  describe "#find_element(key)" do
+    let(:collection) do
+      c = Attrio::Collections::Hash.new(String, key_method: :chr)
+      c.add_element("test","foo","bar")
+      c
+    end
+    it{collection.find_element("test").should be_nil}
+    it{collection.find_element("f").should eq "foo"}
+    it{collection.find_element(0).should be_nil}
+  end
+
 end
