@@ -12,7 +12,6 @@ module Attrio
   autoload :Reset, 'attrio/reset'
   autoload :Helpers, 'attrio/helpers'
   autoload :Readable, 'attrio/readable'
-  autoload :Collectable, 'attrio/collectable'
 
   def self.included(base)
     base.send :include, Attrio::Initialize
@@ -61,6 +60,7 @@ module Attrio
   end
 
   autoload :Attribute, 'attrio/attribute'
+  autoload :Collection, 'attrio/collection'
   autoload :DefaultValue, 'attrio/default_value'
 
   module Builders
@@ -79,7 +79,7 @@ module Attrio
     autoload :Time, 'attrio/types/time'
   end
 
-  module Collection
+  module Collections
     autoload :Array, 'attrio/collection/array'
     autoload :Hash, 'attrio/collection/hash'
     autoload :Set, 'attrio/collection/set'
