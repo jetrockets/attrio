@@ -27,6 +27,15 @@ module Attrio
         end
         @collection
       end
+
+      def has_element?(key)
+        @collection.has_key?(key)
+      end
+
+      def find_element(key)
+         #TODO expand to return default if no element matches
+        @collection.fetch(key, nil)
+      end
     end
   end
 end
