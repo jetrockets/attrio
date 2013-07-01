@@ -7,14 +7,14 @@ describe Attrio::Collection::Set, focus: true  do
     begin
       old_verbose, $VERBOSE = $VERBOSE, nil #shutting off warnings for this block
       #generates warning: toplevel constant Set referenced by Attrio::Collection::Set
-      Attrio::Collections::Set.new(Object, {})
+      Attrio::Collections::Set.create_collection(Object, {})
     ensure
       $VERBOSE = old_verbose
     end
   end
   context "Basic properties" do
     it{collection.should be}
-    it{collection.should be_a Set}
+    it{collection.should be_a_kind_of Set}
   end
   it "should act like a set" do
     collection << 1
@@ -24,7 +24,7 @@ describe Attrio::Collection::Set, focus: true  do
   end
 
   describe "#add_element(*values)" do
-    let(:collection){Attrio::Collections::Set.new(String, {})} #String#chr returns first character of string
+    let(:collection){Attrio::Collections::Set.create_collection(String, {})} #String#chr returns first character of string
     it "should use the :chr method on string to generate key" do
       collection.add_element("test")
       collection.to_a.should eq ["test"]
@@ -43,12 +43,12 @@ describe Attrio::Collection::Set, focus: true  do
     end
     it "should typecast elements before inserting them" do
       type = Attrio::Types.const_get("Integer")
-      collection = Attrio::Collections::Set.new(type, {})
+      collection = Attrio::Collections::Set.create_collection(type, {})
       collection.add_element("12",13)
       collection.to_a.should eq [12,13]
     end
     it "should pass value into constructor before inserting them" do
-      collection = Attrio::Collections::Set.new(Pathname,{})
+      collection = Attrio::Collections::Set.create_collection(Pathname,{})
       collection.add_element("~/workspace", "/tmp")
       collection.to_a.should eq [Pathname.new("~/workspace"), Pathname.new("/tmp")]
     end
@@ -56,7 +56,7 @@ describe Attrio::Collection::Set, focus: true  do
 
   describe "#has_element(key)" do
     let(:collection) do
-      c = Attrio::Collections::Set.new(String,{})
+      c = Attrio::Collections::Set.create_collection(String,{})
       c.add_element("test","foo","bar")
       c
     end
@@ -67,7 +67,7 @@ describe Attrio::Collection::Set, focus: true  do
 
   describe "#find_element(key)" do
     let(:collection) do
-      c = Attrio::Collections::Set.new(String,{})
+      c = Attrio::Collections::Set.create_collection(String,{})
       c.add_element("test","foo","bar")
       c
     end
@@ -79,7 +79,7 @@ describe Attrio::Collection::Set, focus: true  do
           foo == other.foo
         end
       end
-      collection = Attrio::Collections::Set.new(Object,{})
+      collection = Attrio::Collections::Set.create_collection(Object,{})
       element_one = klass.new(123,234)
       element_two = klass.new(123,789)
       collection.add_element(element_one)

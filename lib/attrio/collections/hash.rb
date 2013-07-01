@@ -2,17 +2,14 @@
 
 module Attrio
   module Collections
-    class Hash < DelegateClass(Hash)
+    class Hash < SimpleDelegator
       include Attrio::Collections::Common
 
-      attr_reader :type, :key_method, :options
+      attr_reader :type, :options
 
-      def initialize(type, options = {})
-        @type       = type; @options = options
-        @key_method = options[:key_method] || :hash
+      def initialize
         @collection = {}
         super(@collection)
-        self
       end
 
       def add_element(*values)
@@ -22,7 +19,7 @@ module Attrio
           next if new_val.nil?
           value            = type_cast(new_val)
           #TODO should there be functionality to address assigning a new value to an existing key?
-          key              = value.send(key_method)
+          key              = value.send(index_method)
           @collection[key] = value
         end
         @collection
@@ -33,10 +30,15 @@ module Attrio
       end
 
       def find_element(key)
-         #TODO expand to return default if no element matches
+         #TODO expand to return default if no element matchesa.samples.c
         @collection.fetch(key, nil)
+      end
+
+      def index_method
+        @index_method ||= options[:index]
       end
     end
   end
 end
 
+#b = Attrio::Collection.new(:samples, String, unique: true, index: :chr);class TestMe; end; b.define_collection(TestMe);a = TestMe.new

@@ -6,7 +6,7 @@ describe Attrio::Collections::Hash do
       begin
         old_verbose, $VERBOSE = $VERBOSE, nil #shutting off warnings for this block
         #generates warning: toplevel constant Hash referenced by Attrio::Collection::Hash
-        return Attrio::Collections::Hash.new(Object)
+        return Attrio::Collections::Hash.create_collection(Object, index: :hash)
       ensure
         $VERBOSE = old_verbose
       end
@@ -26,7 +26,7 @@ describe Attrio::Collections::Hash do
   end
 
   describe "#add_element(*values)" do
-    let(:collection){Attrio::Collections::Hash.new(String, key_method: :chr)} #String#chr returns first character of string
+    let(:collection){Attrio::Collections::Hash.create_collection(String, index: :chr)} #String#chr returns first character of string
     it "should use the :chr method on string to generate key" do
       collection.add_element("test")
       collection.should eq({"t" => "test"})
@@ -45,12 +45,12 @@ describe Attrio::Collections::Hash do
     end
     it "should typecast elements before inserting them" do
       type = Attrio::Types.const_get("Integer")
-      collection = Attrio::Collections::Hash.new(type, key_method: :odd? )
+      collection = Attrio::Collections::Hash.create_collection(type, index: :odd? )
       collection.add_element("12",13)
       collection.should eq({true => 13, false => 12})
     end
     it "should pass value into constructor before inserting them" do
-      collection = Attrio::Collections::Hash.new(Pathname, key_method: :absolute? )
+      collection = Attrio::Collections::Hash.create_collection(Pathname, index: :absolute? )
       collection.add_element("~/workspace", "/tmp")
       collection.keys.should eq [false, true]
       collection.values.first.should be_a Pathname
@@ -60,7 +60,7 @@ describe Attrio::Collections::Hash do
 
   describe "#has_element(key)" do
     let(:collection) do
-      c = Attrio::Collections::Hash.new(String, key_method: :chr)
+      c = Attrio::Collections::Hash.create_collection(String, index: :chr)
       c.add_element("test","foo","bar")
       c
     end
@@ -71,7 +71,7 @@ describe Attrio::Collections::Hash do
 
   describe "#find_element(key)" do
     let(:collection) do
-      c = Attrio::Collections::Hash.new(String, key_method: :chr)
+      c = Attrio::Collections::Hash.create_collection(String, index: :chr)
       c.add_element("test","foo","bar")
       c
     end

@@ -1,10 +1,9 @@
 module Attrio
   module Collections
-    class Set < DelegateClass(Set)
+    class Set < SimpleDelegator
       include Attrio::Collections::Common
 
-      def initialize(type, options)
-        @type       = type; @options = options
+      def initialize
         @collection = ::Set.new
         super(@collection)
       end

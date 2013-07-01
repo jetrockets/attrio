@@ -3,10 +3,11 @@ module Attrio
     module Common
       def self.included(base)
         base.send :attr_reader, :type, :options
+        base.extend ClassMethods
       end
 
       def kind_of?(klass)
-        return true if klass == ::Hash
+        return true if klass == @collection.class
         super(klass)
       end
 
@@ -44,6 +45,16 @@ module Attrio
           #TODO expand to return default if no element matches
           nil
         end
+      end
+
+      module ClassMethods
+        def create_collection(type, options = {})
+          collection = self.new
+          collection.instance_variable_set(:@type, type)
+          collection.instance_variable_set(:@options, options)
+          collection
+        end
+
       end
     end
   end
