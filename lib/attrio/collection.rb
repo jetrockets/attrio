@@ -12,18 +12,18 @@ module Attrio
       Attrio::Builders::CollectionBuilder.define_collection(klass, self.type,
         self.options.merge({
           :container => self.container_type,
-          :method_name => self.writer_method_name,
-          :method_visibility => self.writer_visibility,
+          :method_name => self.reader_method_name,
+          :method_visibility => self.reader_visibility,
           :instance_variable_name => self.instance_variable_name,
           :add_element_name => self.add_element_name,
-          :add_element_visibility => self.add_element_visibility
+          :add_element_visibility => self.add_element_visibility,
+          :find_element_name => self.find_element_name,
+          :find_element_visibility => self.find_element_visibility,
+          :has_element_name => self.has_element_name,
+          :has_element_visibility => self.has_element_visibility
         })
       )
       self
-    end
-
-    def initial_values
-
     end
 
     def add_element_name
@@ -35,18 +35,26 @@ module Attrio
     end
 
     def find_element_name
-      @add_element_name ||= self.accessor_name_from_options(:find_element) || "find_#{self.name}"
+      @find_element_name ||= self.accessor_name_from_options(:find_element) || "find_#{self.name}"
     end
 
     def find_element_visibility
-      @add_element_visibility ||= self.accessor_visibility_from_options(:find_element) || :public
+      @find_element_visibility ||= self.accessor_visibility_from_options(:find_element) || :public
+    end
+
+    def has_element_name
+      @has_element_name ||= self.accessor_name_from_options(:has_element) || "has_#{self.name}?"
+    end
+
+    def has_element_visibility
+      @has_element_visibility ||= self.accessor_visibility_from_options(:has_element) || :public
     end
 
     protected
     def container_type
-      return Attrio::Collection::Hash if options.fetch(:unique, false) && options.fetch(:index, nil)
-      return Attrio::Collection::Set if options.fetch(:unique, false)
-      return Attrio::Collection::Array
+      return Attrio::Collections::Hash if options.fetch(:unique, false) && options.fetch(:index, nil)
+      return Attrio::Collections::Set if options.fetch(:unique, false)
+      return Attrio::Collections::Array
     end
   end
 end

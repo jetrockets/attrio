@@ -1,13 +1,13 @@
 module Attrio
   module Collections
-    class Array < DelegateClass(Array)
+    class Array < SimpleDelegator
       include Attrio::Collections::Common
 
-      def initialize(type, options)
-        @type       = type; @options = options
+      def initialize
         @collection = []
         super(@collection)
       end
+
       def add_element(*values)
         #TODO should we skip values that can't be coerced into type?
         #TODO should we raise our own exception if any value is not of correct type?

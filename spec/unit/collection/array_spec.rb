@@ -2,12 +2,12 @@ require 'spec_helper'
 
 #TODO figure out why this warning is at top of spec results and not for hash
 #/home/scottp/workspace/attrio/spec/unit/collection/array_spec.rb:3: warning: toplevel constant Array referenced by Attrio::Collection::Array
-describe Attrio::Collection::Array do
+describe Attrio::Collections::Array do
   let(:collection) do
     begin
       old_verbose, $VERBOSE = $VERBOSE, nil #shutting off warnings for this block
       #generates warning: toplevel constant Set referenced by Attrio::Collection::Set
-      Attrio::Collections::Array.new(Object,{})
+      Attrio::Collections::Array.create_collection(Object,{})
     ensure
       $VERBOSE = old_verbose
     end
@@ -24,7 +24,7 @@ describe Attrio::Collection::Array do
   end
   
   describe "#add_element(*values)" do
-    let(:collection){Attrio::Collections::Array.new(String, {})} #String#chr returns first character of string
+    let(:collection){Attrio::Collections::Array.create_collection(String, {})} #String#chr returns first character of string
     it "should use the :chr method on string to generate key" do
       collection.add_element("test")
       collection.to_a.should eq ["test"]
@@ -43,19 +43,19 @@ describe Attrio::Collection::Array do
     end
     it "should typecast elements before inserting them" do
       type = Attrio::Types.const_get("Integer")
-      collection = Attrio::Collections::Array.new(type, {})
+      collection = Attrio::Collections::Array.create_collection(type, {})
       collection.add_element("12",13)
       collection.to_a.should eq [12,13]
     end
     it "should pass value into constructor before inserting them" do
-      collection = Attrio::Collections::Array.new(Pathname,{})
+      collection = Attrio::Collections::Array.create_collection(Pathname,{})
       collection.add_element("~/workspace", "/tmp")
       collection.to_a.should eq [Pathname.new("~/workspace"), Pathname.new("/tmp")]
     end
   end
   describe "#has_element(key)" do
     let(:collection) do
-      c = Attrio::Collections::Set.new(String,{})
+      c = Attrio::Collections::Array.create_collection(String,{})
       c.add_element("test","foo","bar")
       c
     end
@@ -66,7 +66,7 @@ describe Attrio::Collection::Array do
 
   describe "#find_element(key)" do
     let(:collection) do
-      c = Attrio::Collections::Array.new(String,{})
+      c = Attrio::Collections::Array.create_collection(String,{})
       c.add_element("test","foo","bar")
       c
     end
@@ -78,7 +78,7 @@ describe Attrio::Collection::Array do
           foo == other.foo
         end
       end
-      collection = Attrio::Collections::Array.new(Object,{})
+      collection = Attrio::Collections::Array.create_collection(Object,{})
       element_one = klass.new(123,234)
       element_two = klass.new(123,789)
       collection.add_element(element_one)

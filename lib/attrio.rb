@@ -66,6 +66,7 @@ module Attrio
   module Builders
     autoload :ReaderBuilder, 'attrio/builders/reader_builder'
     autoload :WriterBuilder, 'attrio/builders/writer_builder'
+    autoload :CollectionBuilder, 'attrio/builders/collection_builder'
   end
 
   module Types
