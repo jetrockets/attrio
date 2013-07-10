@@ -31,7 +31,11 @@ module Attrio
       collection_options = args.last.kind_of?(Hash) ? args.pop : Hash.new
       collection_type = self.fetch_type(collection_options.delete(:type) || args[1])
 
-      collection_container_type = self.fetch_container_type(options)
+      collection = self.create_collection(collection_name, collection_type,
+                                          collection_options)
+      self.add_collection(collection_name, collection)
+
+      self
     end
 
     def self.cast_type(constant)
@@ -59,6 +63,10 @@ module Attrio
       self.options[:as]
     end
 
+    def c_as
+      self.options[:c_as]
+    end
+
     def fetch_type(name)
       return if name.nil?
 
@@ -78,6 +86,10 @@ module Attrio
 
     def add_attribute(name, attribute)
       @klass.send(self.as)[name.to_sym] = attribute
-    end        
+    end
+
+    def add_collection(name, collection)
+      @klass.send(self.c_as)[name.to_sym] = collection
+    end
   end
 end

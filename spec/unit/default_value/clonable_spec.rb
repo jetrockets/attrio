@@ -15,10 +15,10 @@ describe Attrio::DefaultValue::Clonable do
 
   let(:object){ model.new }
 
-  let(:attribute){ mock('attribute')}
-  let(:default_value){ mock('default_value')}
-  let(:instance)  { mock('instance') }
-  let(:clone)     { mock('clone') }
+  let(:attribute){ double('attribute')}
+  let(:default_value){ double('default_value')}
+  let(:instance)  { double('instance') }
+  let(:clone)     { double('clone') }
 
   before { default_value.stub(:clone => clone) }
 

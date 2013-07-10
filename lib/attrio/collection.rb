@@ -20,7 +20,13 @@ module Attrio
           :find_element_name => self.find_element_name,
           :find_element_visibility => self.find_element_visibility,
           :has_element_name => self.has_element_name,
-          :has_element_visibility => self.has_element_visibility
+          :has_element_visibility => self.has_element_visibility,
+          :reset_collection_name => self.reset_collection_name,
+          :reset_collection_visibility => self.reset_collection_visibility,
+          :initialize_collection_name => self.initialize_collection_name,
+          :initialize_collection_visibility => self.initialize_collection_visibility,
+          :empty_collection_name => self.empty_collection_name,
+          :empty_collection_visibility => self.empty_collection_visibility
         })
       )
       self
@@ -48,6 +54,30 @@ module Attrio
 
     def has_element_visibility
       @has_element_visibility ||= self.accessor_visibility_from_options(:has_element) || :public
+    end
+    
+    def reset_collection_name
+      @reset_collection_name ||= self.accessor_name_from_options(:reset_collection)  || "reset_#{self.name}"
+    end
+
+    def reset_collection_visibility
+      @reset_collection_visibility ||= self.accessor_visibility_from_options(:reset_collection) || :public
+    end
+
+    def initialize_collection_name
+      @initialize_collection_name ||= self.accessor_name_from_options(:initialize_collection)  || "initialize_#{self.name}"
+    end
+
+    def initialize_collection_visibility
+      @initialize_collection_visibility ||= self.accessor_visibility_from_options(:initialize_collection) || :public
+    end
+
+    def empty_collection_name
+      @empty_collection_name ||= self.accessor_name_from_options(:empty_collection)  || "empty_#{self.name}"
+    end
+
+    def empty_collection_visibility
+      @empty_collection_visibility ||= self.accessor_visibility_from_options(:empty_collection) || :public
     end
 
     protected

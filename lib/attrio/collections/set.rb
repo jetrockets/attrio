@@ -4,7 +4,7 @@ module Attrio
       include Attrio::Collections::Common
 
       def initialize
-        @collection = ::Set.new
+        @collection = __mk_empty_collection__
         super(@collection)
       end
 
@@ -13,12 +13,17 @@ module Attrio
         #TODO should we raise our own exception if any value is not of correct type?
         values.each do |new_val|
           next if new_val.nil?
-          value            = type_cast(new_val)
           #TODO should there be functionality to address assigning a duplicate?
-          @collection << value
+          self << __normalize_value__(new_val)
         end
-        @collection
+        self
       end
+
+      private
+      def __mk_empty_collection__
+        ::Set.new
+      end
+
     end
   end
 end

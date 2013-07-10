@@ -1,17 +1,10 @@
 require 'spec_helper'
 
-#TODO figure out why this warning is at top of spec results and not for Hash
+#todo find a way to fix the warning
 #/home/scottp/workspace/attrio/spec/unit/collection/set_spec.rb:5: warning: toplevel constant Set referenced by Attrio::Collection::Set
 describe Attrio::Collection::Set, focus: true  do
-  let(:collection) do
-    begin
-      old_verbose, $VERBOSE = $VERBOSE, nil #shutting off warnings for this block
-      #generates warning: toplevel constant Set referenced by Attrio::Collection::Set
-      Attrio::Collections::Set.create_collection(Object, {})
-    ensure
-      $VERBOSE = old_verbose
-    end
-  end
+  let(:collection){Attrio::Collections::Set.create_collection(Object, {})}
+
   context "Basic properties" do
     it{collection.should be}
     it{collection.should be_a_kind_of Set}

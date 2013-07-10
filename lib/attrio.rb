@@ -24,9 +24,11 @@ module Attrio
   module ClassMethods
     def define_attributes(options = {}, &block)
       options[:as] ||= :attributes
+      options[:c_as] ||= options[:collections_as] || :collections
       
       class_eval(<<-EOS, __FILE__, __LINE__ + 1)        
         @#{options[:as]} ||= {}
+        @#{options[:c_as]} ||= {}
 
         class << self
           def #{options[:as]}(attributes = [])
@@ -37,21 +39,36 @@ module Attrio
             @#{options[:as]}.select{ |k,v| attributes.include?(k) }          
           end
 
-          def inherited(subclass)          
+          def #{options[:c_as]}(collections = [])
+            collections = Helpers.to_a(collections).flatten
+            return @#{options[:c_as]} if collections.empty?
+
+            collections = @#{options[:c_as]}.keys & collections
+            @#{options[:c_as]}.select{ |k,v| collections.include?(k)}
+          end
+
+          def inherited(subclass)
             subclass.instance_variable_set("@#{options[:as]}", instance_variable_get("@#{options[:as]}").dup)
+            subclass.instance_variable_set("@#{options[:c_as]}", instance_variable_get("@#{options[:c_as]}").dup)
           end
         end
 
         def #{options[:as]}(attributes = [])
           self.class.#{options[:as]}(attributes)
         end
+
+        def #{options[:c_as]}(collections = [])
+          self.class.#{options[:c_as]}(collections)
+        end
       EOS
 
       self.define_attrio_new(options[:as])
       self.define_attrio_reset(options[:as])
-      self.define_attrio_inspect(options[:as]) unless options[:inspect] == false
+      self.define_attrio_inspect(options[:as],options[:c_as]) unless options[:inspect] == false
 
       Attrio::AttributesParser.new(self, options, &block)
+      self.define_attrio_collection_reset(options[:c_as])
+
     end
 
     def const_missing(name)

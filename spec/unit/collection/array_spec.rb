@@ -1,17 +1,8 @@
 require 'spec_helper'
 
-#TODO figure out why this warning is at top of spec results and not for hash
-#/home/scottp/workspace/attrio/spec/unit/collection/array_spec.rb:3: warning: toplevel constant Array referenced by Attrio::Collection::Array
 describe Attrio::Collections::Array do
-  let(:collection) do
-    begin
-      old_verbose, $VERBOSE = $VERBOSE, nil #shutting off warnings for this block
-      #generates warning: toplevel constant Set referenced by Attrio::Collection::Set
-      Attrio::Collections::Array.create_collection(Object,{})
-    ensure
-      $VERBOSE = old_verbose
-    end
-  end
+  let(:collection){Attrio::Collections::Array.create_collection(Object,{})}
+
   context "Basic properties" do
     it{collection.should be}
     it{collection.should be_a Array}

@@ -15,9 +15,9 @@ describe Attrio::DefaultValue::Callable do
 
   let(:object){ model.new }
 
-  let(:attribute){ mock('attribute')}
-  let(:default_value){ mock('default_value')}
-  let(:response)  { stub('response') }
+  let(:attribute){ double('attribute')}
+  let(:default_value){ double('default_value')}
+  let(:response)  { double('response') }
 
   before { default_value.stub(:call => response) }
   it 'should call the value with the object and attribute' do

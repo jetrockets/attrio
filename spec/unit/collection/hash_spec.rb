@@ -2,15 +2,8 @@ require 'spec_helper'
 
 describe Attrio::Collections::Hash do
   context "Basic properties" do
-    let(:collection) do
-      begin
-        old_verbose, $VERBOSE = $VERBOSE, nil #shutting off warnings for this block
-        #generates warning: toplevel constant Hash referenced by Attrio::Collection::Hash
-        return Attrio::Collections::Hash.create_collection(Object, index: :hash)
-      ensure
-        $VERBOSE = old_verbose
-      end
-    end
+    let(:collection){Attrio::Collections::Hash.create_collection(Object, index: :hash)}
+
     it{collection.should be}
     #delegation is making this fail, using alternate below
     #it{collection.should be_a Attrio::Collections::Hash}

@@ -20,8 +20,8 @@ describe Attrio::DefaultValue::Symbol do
 
   let(:object){ model.new }
 
-  let(:attribute){ mock('attribute')}
-  let(:default_value){ mock('default_value')}
+  let(:attribute){ double('attribute')}
+  let(:default_value){ double('default_value')}
 
   it "should set attribute value to appropriate type" do
     object.attribute.should be_instance_of(Date)  
