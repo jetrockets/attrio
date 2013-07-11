@@ -10,7 +10,6 @@ module Attrio
       end
 
       def add_element(*values)
-        #binding.pry
         values.flatten!
         #TODO should we skip values that can't be coerced into type?
         #TODO should we raise our own exception if any value is not of correct type?
