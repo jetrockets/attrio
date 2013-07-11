@@ -24,7 +24,7 @@ Or install it yourself as:
 
 ## Usage
 
-Include Attrio into your class and then use `#define_attributes` block to declare you attributes.
+Include Attrio into your class and then use `#define_attributes` block to declare your attributes and collections.
 
 ```ruby
 class User
@@ -34,6 +34,8 @@ class User
   	attr :name, String
     attr :age, Integer
     attr :birthday, DateTime
+    collection :roles, Symbol, :unique => true
+    collection :pictures, UserPicture
   end
 end
 ```
@@ -72,10 +74,12 @@ Accessor name can be easily overridden by passing `:as` option to `define_attrib
 class User
   include Attrio
 	
-  define_attributes :as => 'api_attributes' do
+  define_attributes :as => 'api_attributes', collection_as: 'api_collections' do
   	attr :name, String
     attr :age, Integer
     attr :birthday, DateTime
+    collection :roles, Symbol
+    collection :pictures, UserPicture, unique: true, index: :filename
   end
 end
 ```
@@ -85,7 +89,72 @@ user = User.new
 user.api_attributes # => {...}
 ```
 
-### Default values
+### Accessing Collections
+By default Attrio defines `#collections` accessor which contains `Hash` with collection names as keys and instances of `Attrio::Collection` as values.  Each instance of `Attrio::Collection` contains the following information:
+ * type
+ * collection reader name
+ * collection reader visibility
+ * add element method name
+ * add element method visibility
+ * find element method name
+ * find element method visibility
+ * has element method name
+ * has element method visibility
+ * empty collection method name
+ * empty collection method visibility
+ * reset collection method name
+ * reset collection method visibility
+ * initialize collection method name
+ * initialize collection method visibility
+ * container type
+ * instance variable name
+ * additional options
+
+```ruby
+user = User.new
+user.collections
+# => {
+#     :roles => #<Attrio::Collection:0x007fc44defa680 @name='roles', @type=Symbol, @options={}, @collection_reader_name="roles", @collection_reader_visibility=:pubic, @add_element_name='add_role',@add_element_visibility=:public, @find_element_name='find_role', @find_element_name=:private, @instance_variable_name='@roles'>
+#     :pictures => #<Attrio::Collection:0x007f322efa680 @name='pcitures', @type=UserPicture, @options={:unique => true, :index => :filename}, @collection_reader_name="pictures", @collection_reader_visibility=:pubic, @add_element_name='add_picture',@add_element_visibility=:public, @find_element_name='find_picture', @find_element_name=:public, @instance_variable_name='@pictures'>
+# }
+user.collections.keys
+# => [:roles, :pictures]
+```
+
+Collections accessor can be overridden by :collections_as or :c_as
+
+Collections with a truthy option :unique (and no :index), are created as sets.  Collections with a truthy option :unique and a :index set are created as a hash using the value returned by the method defined as :index as a key and the object as a hash.  Collections without a truthy :unique option are created as an array
+
+### Methods for Attributes
+
+### Methods for collections
+
+A number of methods are added to the class for each collection entered.
+
+```ruby
+class Classroom
+  include Attrio
+  define_attributes do
+    attr :name, String
+    collection :students, Student, :unique => true, :index => :name,
+               :initial_values => [{:name => "Bob"},{:name => "Kathy"}]
+  end
+end
+
+my_class = Classroom.new
+my_class.students            #return the collection
+my_class.empty_students      #empty the collection
+my_class.initialize_students #Re-add the default values to the collection
+my_class.reset_students      #Empty collection then initialize with default_values
+my_class.add_student("Mike") #add 1 or more elements to collection
+my_class.find_student("Mike")#return element matching "Mike". For Hashes this
+ is the key value, for Sets and Arrays this attempts to match the object given
+
+my_class.has_element?("Molly")#returns true if the collection contains the
+element, matched the same as find_student
+```
+
+### Default values for Attributes
 
 Attrio supports all the ways to setup default values that Virtus has.
 
@@ -129,8 +198,52 @@ class Page
 end
 ```
 
+### Initial Values for Collections
+
+Collections support defining initial values with all the same functionality
+as default values for attributes.  the option can take either a single value
+or an array of them.
+
+```ruby
+class Book
+  include Attrio
+
+  DEFAULT_PAGES = [{:title => "Table of Contents },
+                   {:title => "index"},
+                   {:title => "Title Page"}]
+
+  define_attributes do
+    attr :content, String
+    attr :views, Integer, :default => 0
+    collection :pages, :unique => true, :index => :title, :initial_values =>
+    DEFAULT_PAGES
+  end
+
+  def initialize(attributes = {})
+    self.attributes = attributes
+  end
+
+  def attributes=(attributes = {})
+    attributes.each do |attr,value|
+      self.send("#{attr}=", value) if self.respond_to?("#{attr}=")
+      self.send("add_#{attr}", value) if self.respond_to?("add_#{attr}")
+    end
+  end
+
+  def default_editor_title
+    if self.published?
+      title
+    else
+      title.present? ? "UNPUBLISHED: #{title}" : "UNPUBLISHED"
+    end
+  end
+end
+```
+
+
 ### Embed Value
-You can embed values in Attrio just like you do it in Virtus.
+You can embed both attribute and collection values in Attrio just like you do
+it in Virtus.
 
 ```ruby
 module MassAssignment
@@ -301,7 +414,9 @@ end
 ```
 
 ## Inspect
-Attrio adds its own `#inspect` method when included to the class. This overridden method prints object attributes in easy to read manner. To disable this feature pass `:inspect => false` to `define_arguments` block.
+Attrio adds its own `#inspect` method when included to the class. This
+overridden method prints object attributes and collections in easy to read
+manner. To disable this feature pass `:inspect => false` to `define_arguments` block.
 
 ```ruby
 class Klass

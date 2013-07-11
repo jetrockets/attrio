@@ -1,0 +1,30 @@
+module Attrio
+  module Collections
+    class Set < SimpleDelegator
+      include Attrio::Collections::Common
+
+      def initialize
+        @collection = __mk_empty_collection__
+        super(@collection)
+      end
+
+      def add_element(*values)
+        values.flatten!
+        #TODO should we skip values that can't be coerced into type?
+        #TODO should we raise our own exception if any value is not of correct type?
+        values.each do |new_val|
+          next if new_val.nil?
+          #TODO should there be functionality to address assigning a duplicate?
+          self << __normalize_value__(new_val)
+        end
+        self
+      end
+
+      private
+      def __mk_empty_collection__
+        ::Set.new
+      end
+
+    end
+  end
+end

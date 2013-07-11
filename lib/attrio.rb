@@ -11,6 +11,7 @@ module Attrio
   autoload :Inspect, 'attrio/inspect'
   autoload :Reset, 'attrio/reset'
   autoload :Helpers, 'attrio/helpers'
+  autoload :Readable, 'attrio/readable'
 
   def self.included(base)
     base.send :include, Attrio::Initialize
@@ -23,9 +24,11 @@ module Attrio
   module ClassMethods
     def define_attributes(options = {}, &block)
       options[:as] ||= :attributes
+      options[:c_as] ||= options[:collections_as] || :collections
       
       class_eval(<<-EOS, __FILE__, __LINE__ + 1)        
         @#{options[:as]} ||= {}
+        @#{options[:c_as]} ||= {}
 
         class << self
           def #{options[:as]}(attributes = [])
@@ -36,21 +39,36 @@ module Attrio
             @#{options[:as]}.select{ |k,v| attributes.include?(k) }          
           end
 
-          def inherited(subclass)          
+          def #{options[:c_as]}(collections = [])
+            collections = Helpers.to_a(collections).flatten
+            return @#{options[:c_as]} if collections.empty?
+
+            collections = @#{options[:c_as]}.keys & collections
+            @#{options[:c_as]}.select{ |k,v| collections.include?(k)}
+          end
+
+          def inherited(subclass)
             subclass.instance_variable_set("@#{options[:as]}", instance_variable_get("@#{options[:as]}").dup)
+            subclass.instance_variable_set("@#{options[:c_as]}", instance_variable_get("@#{options[:c_as]}").dup)
           end
         end
 
         def #{options[:as]}(attributes = [])
           self.class.#{options[:as]}(attributes)
         end
+
+        def #{options[:c_as]}(collections = [])
+          self.class.#{options[:c_as]}(collections)
+        end
       EOS
 
       self.define_attrio_new(options[:as])
       self.define_attrio_reset(options[:as])
-      self.define_attrio_inspect(options[:as]) unless options[:inspect] == false
+      self.define_attrio_inspect(options[:as],options[:c_as]) unless options[:inspect] == false
 
       Attrio::AttributesParser.new(self, options, &block)
+      self.define_attrio_collection_reset(options[:c_as])
+
     end
 
     def const_missing(name)
@@ -59,11 +77,13 @@ module Attrio
   end
 
   autoload :Attribute, 'attrio/attribute'
+  autoload :Collection, 'attrio/collection'
   autoload :DefaultValue, 'attrio/default_value'
 
   module Builders
     autoload :ReaderBuilder, 'attrio/builders/reader_builder'
     autoload :WriterBuilder, 'attrio/builders/writer_builder'
+    autoload :CollectionBuilder, 'attrio/builders/collection_builder'
   end
 
   module Types
@@ -76,4 +96,12 @@ module Attrio
     autoload :Symbol, 'attrio/types/symbol'
     autoload :Time, 'attrio/types/time'
   end
+
+  module Collections
+    autoload :Common, 'attrio/collections/common'
+    autoload :Array, 'attrio/collections/array'
+    autoload :Hash, 'attrio/collections/hash'
+    autoload :Set, 'attrio/collections/set'
+  end
+
 end
