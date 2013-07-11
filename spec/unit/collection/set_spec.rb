@@ -22,7 +22,7 @@ describe Attrio::Collection::Set, focus: true  do
       collection.add_element("test")
       collection.to_a.should eq ["test"]
     end
-    it "should only add a goven element once" do
+    it "should only add a given element once" do
       collection.add_element("test")
       collection.add_element("test")
       collection.to_a.should eq ["test"]
@@ -79,6 +79,5 @@ describe Attrio::Collection::Set, focus: true  do
       collection.add_element(element_two)
       collection.find_element(element_two).should be element_one
     end
-
   end
 end

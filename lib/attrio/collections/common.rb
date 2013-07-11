@@ -35,6 +35,7 @@ module Attrio
       def reset_collection
         empty_collection
         initialize_collection
+        self
       end
 
       def add_element(*args)
@@ -53,6 +54,7 @@ module Attrio
 
       def empty_collection
         self.__setobj__(__mk_empty_collection__)
+        self
       end
 
       def __mk_empty_collection__
