@@ -300,6 +300,23 @@ class Klass
 end
 ```
 
+**Array**
+
+Arrays are designed to automatically handle collections of objects (that also can be typecasted)
+
+If value that should be typecasted responds to `split`, then this method is called with default (or overriden) attributes, else `Array` is wrapped on value. You can easily handle types and options of collection elements.
+
+```ruby
+class Klass
+  include Attrio
+
+  define_attributes do
+	attr :array_attribute, Array
+    attr :custom_array_attribute, Array, :split => ', ', :element => { :type => Date, :options => { :format => '%m/%d/%y' } }
+  end
+end
+```
+
 ## Inspect
 Attrio adds its own `#inspect` method when included to the class. This overridden method prints object attributes in easy to read manner. To disable this feature pass `:inspect => false` to `define_arguments` block.
 

@@ -23,8 +23,8 @@ module Attrio
   module ClassMethods
     def define_attributes(options = {}, &block)
       options[:as] ||= :attributes
-      
-      class_eval(<<-EOS, __FILE__, __LINE__ + 1)        
+
+      class_eval(<<-EOS, __FILE__, __LINE__ + 1)
         @#{options[:as]} ||= {}
 
         class << self
@@ -33,10 +33,10 @@ module Attrio
             return @#{options[:as]} if attributes.empty?
 
             attributes = @#{options[:as]}.keys & attributes
-            @#{options[:as]}.select{ |k,v| attributes.include?(k) }          
+            @#{options[:as]}.select{ |k,v| attributes.include?(k) }
           end
 
-          def inherited(subclass)          
+          def inherited(subclass)
             subclass.instance_variable_set("@#{options[:as]}", instance_variable_get("@#{options[:as]}").dup)
           end
         end
@@ -67,6 +67,7 @@ module Attrio
   end
 
   module Types
+    autoload :Array, 'attrio/types/array'
     autoload :Base, 'attrio/types/base'
     autoload :Boolean, 'attrio/types/boolean'
     autoload :Date, 'attrio/types/date'

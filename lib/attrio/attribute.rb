@@ -32,7 +32,7 @@ module Attrio
       if !defined?(@default_value)
         @default_value = Attrio::DefaultValue.new(self.name, self.options[:default])
       end
-      @default_value      
+      @default_value
     end
 
     def define_writer(klass)
@@ -64,7 +64,7 @@ module Attrio
     end
 
     def accessor_visibility_from_options(accessor)
-      return self.options[accessor] if self.options[accessor].present? && [:public, :protected, :private].include?(self.options[accessor])          
+      return self.options[accessor] if self.options[accessor].present? && [:public, :protected, :private].include?(self.options[accessor])
       (self.options[accessor].is_a?(Hash) && self.options[accessor][:visibility]) || self.options["#{accessor.to_s}_visibility".to_sym]
     end
   end

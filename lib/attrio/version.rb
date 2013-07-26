@@ -1,9 +1,9 @@
 # encoding: utf-8
 
-module Attrio  
+module Attrio
   module Version
     MAJOR = 0
-    MINOR = 3
+    MINOR = 5
     PATCH = 0
     BUILD = nil
 

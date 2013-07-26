@@ -13,7 +13,7 @@ describe Attrio::Types::Date do
     end
 
     let(:object){ model.new }
-  
+
     context 'with not typecasted assignment' do
       it 'should cast <String>' do
         today = Date.today
@@ -47,7 +47,7 @@ describe Attrio::Types::Date do
     end
 
     let(:object){ model.new }
-  
+
     context 'with not typecasted assignment' do
       it 'should cast <String> of appropriate format' do
         today = Date.today

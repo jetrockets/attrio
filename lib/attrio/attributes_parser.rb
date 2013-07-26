@@ -31,7 +31,7 @@ module Attrio
 
       string = constant.to_s
       string = string.camelize if (string =~ /\w_\w/ || string.chars.first.downcase == string.chars.first)
-      
+
       begin
         if Attrio::Types.const_defined?(string)
           return Attrio::Types.const_get(string)
@@ -66,6 +66,6 @@ module Attrio
 
     def add_attribute(name, attribute)
       @klass.send(self.as)[name.to_sym] = attribute
-    end        
+    end
   end
 end

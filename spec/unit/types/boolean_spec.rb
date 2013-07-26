@@ -14,55 +14,55 @@ describe Attrio::Types::Boolean do
 
     let(:object){ model.new }
 
-    context 'not typecasted assignment' do
-      it 'should cast "true"' do        
+    context 'with not typecasted assignment' do
+      it 'should cast "true"' do
         object.boolean_attribute = 'true'
         object.boolean_attribute?.should be_true
       end
 
-      it 'should cast "1"' do        
+      it 'should cast "1"' do
         object.boolean_attribute = '1'
         object.boolean_attribute?.should be_true
       end
 
-      it 'should cast 1' do      
+      it 'should cast 1' do
         object.boolean_attribute = 1
         object.boolean_attribute?.should be_true
       end
 
-      it 'should cast "yes"' do        
+      it 'should cast "yes"' do
         object.boolean_attribute = 'yes'
         object.boolean_attribute?.should be_true
       end
 
-      it 'should cast "false"' do        
+      it 'should cast "false"' do
         object.boolean_attribute = 'false'
         object.boolean_attribute?.should be_false
       end
 
-      it 'should cast "0"' do        
+      it 'should cast "0"' do
         object.boolean_attribute = '0'
         object.boolean_attribute?.should be_false
       end
 
-      it 'should cast 0' do        
+      it 'should cast 0' do
         object.boolean_attribute = 0
         object.boolean_attribute?.should be_false
       end
 
-      it 'should cast "no"' do      
+      it 'should cast "no"' do
         object.boolean_attribute = 'no'
         object.boolean_attribute?.should be_false
       end
     end
 
-    context 'typecasted assignment' do
-      it 'should assign <TrueClass> and do not typecast' do          
+    context 'with typecasted assignment' do
+      it 'should assign <TrueClass> and do not typecast' do
         object.boolean_attribute = true
         object.boolean_attribute?.should be_true
       end
 
-      it 'should assign <FalseClass> and do not typecast' do        
+      it 'should assign <FalseClass> and do not typecast' do
         object.boolean_attribute = false
         object.boolean_attribute?.should be_false
       end
@@ -82,12 +82,12 @@ describe Attrio::Types::Boolean do
 
     let(:object){ model.new }
 
-    it 'should cast "yeah" as TrueClass' do        
+    it 'should cast "yeah" as TrueClass' do
       object.boolean_attribute = 'yeah'
       object.boolean_attribute?.should be_true
     end
 
-    it 'should cast anything else as FalseClass' do        
+    it 'should cast anything else as FalseClass' do
       object.boolean_attribute = 'yes'
       object.boolean_attribute?.should be_false
 
@@ -97,5 +97,5 @@ describe Attrio::Types::Boolean do
       object.boolean_attribute = 0
       object.boolean_attribute?.should be_false
     end
-  end  
+  end
 end

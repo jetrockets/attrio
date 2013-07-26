@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-module Attrio  
+module Attrio
   module Types
     class Boolean < Base
       def self.typecast(value, options = {})
