@@ -17,7 +17,7 @@ module Attrio
       #
       def call(instance)
         self.value.call(instance, self.attribute)
-      end    
+      end
     end
   end
 end

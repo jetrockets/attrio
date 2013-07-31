@@ -42,7 +42,13 @@ module Attrio
         end
 
         def #{options[:as]}(attributes = [])
-          self.class.#{options[:as]}(attributes)
+          # self.class.#{options[:as]}(attributes)
+
+          attributes = Helpers.to_a(attributes).flatten
+          return @#{options[:as]} if attributes.empty?
+
+          attributes = @#{options[:as]}.keys & attributes
+          @#{options[:as]}.select{ |k,v| attributes.include?(k) }
         end
       EOS
 

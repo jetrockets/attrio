@@ -14,7 +14,7 @@ describe 'Embedded Value' do
       end
     end
 
-    class City  
+    class City
       include Attrio
       include MassAssignment
 

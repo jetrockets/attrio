@@ -2,14 +2,14 @@
 
 module Attrio
   module Inspect
-    def self.included(base)    
+    def self.included(base)
       base.send(:extend, Attrio::Inspect::ClassMethods)
     end
 
     module ClassMethods
       def define_attrio_inspect(as)
         define_method(:inspect) do
-          inspection = self.send(as.to_s).map { |key, attribute|              
+          inspection = self.send(as.to_s).map { |key, attribute|
             self.inspect_attribute(key, attribute.instance_variable_name)
           }.compact.join(', ')
 

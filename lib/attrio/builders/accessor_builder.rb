@@ -17,7 +17,7 @@ module Attrio
           type.send("default_#{self.accessor.to_s}_aliases", options[:method_name]).each do |alias_method_name|
             klass.send(:alias_method, alias_method_name, options[:method_name])
           end
-        end        
+        end
       end
     end
   end
