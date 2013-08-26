@@ -77,6 +77,11 @@ class User
     attr :age, Integer
     attr :birthday, DateTime
   end
+  
+  define_attributes :as => 'settings' do
+    attr :receives_notifications, Boolean, :default => true
+  end
+  
 end
 ```
 
@@ -127,6 +132,19 @@ class Page
     end    
   end
 end
+```
+
+You can does your attribute still has default value or not.
+
+```ruby
+p = Page.new
+=> #<Page title: nil, views: 0, published: false, slug: nil, editor_title: "UNPUBLISHED">
+p.attributes[:editor_title].default?
+=> true
+p.editor_title = 'PUBLISHED'
+=> "PUBLISHED" 
+p.attributes[:editor_title].default?
+=> false
 ```
 
 ### Embed Value

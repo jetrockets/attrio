@@ -2,31 +2,33 @@
 
 module Attrio
   module Inspect
-    def self.included(base)
-      base.send(:extend, Attrio::Inspect::ClassMethods)
+    def inspect
+      inspection = []
+
+      self.class.attrio.each do |group, options|
+        unless options[:inspect] == false
+          inspection << self.send(group).map { |key, attribute|
+            self.inspect_attribute(key, attribute.instance_variable_name)
+          }
+        end
+      end
+
+      unless inspection.size == 0
+        "#<#{self.class} #{inspection.flatten.compact.join(', ')}>"
+      else
+        super
+      end
     end
 
-    module ClassMethods
-      def define_attrio_inspect(as)
-        define_method(:inspect) do
-          inspection = self.send(as.to_s).map { |key, attribute|
-            self.inspect_attribute(key, attribute.instance_variable_name)
-          }.compact.join(', ')
+    def inspect_attribute(attribute_name, instance_variable_name)
+      value = instance_variable_get(instance_variable_name.to_s)
 
-          "#<#{self.class} #{inspection}>"
-        end
-
-        define_method(:inspect_attribute) do |attribute_name, instance_variable_name|
-          value = instance_variable_get(instance_variable_name.to_s)
-
-          if value.is_a?(String) && value.length > 50
-            "#{attribute_name.to_s}[#{value.size}]: " + "#{value[0..50]}...".inspect
-          elsif value.is_a?(Array) && value.length > 5
-            "#{attribute_name.to_s}[#{value.size}]: " + "#{value[0..5]}...".inspect
-          else
-            "#{attribute_name.to_s}: " + value.inspect
-          end
-        end
+      if value.is_a?(String) && value.length > 50
+        "#{attribute_name.to_s}[#{value.size}]: " + "#{value[0..50]}...".inspect
+      elsif value.is_a?(Array) && value.length > 5
+        "#{attribute_name.to_s}[#{value.size}]: " + "#{value[0..5]}...".inspect
+      else
+        "#{attribute_name.to_s}: " + value.inspect
       end
     end
   end

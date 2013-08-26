@@ -2,13 +2,11 @@
 
 module Attrio
   class AttributesParser
-    attr_reader :klass, :options
+    attr_reader :klass, :as
 
-    def initialize(klass, options, &block)
+    def initialize(klass, as, &block)
       @klass = klass
-      @options = options
-
-      raise ArgumentError.new('Missing options[:as] value' ) if @options[:as].blank?
+      @as = as
 
       self.instance_eval(&block)
     end
@@ -47,9 +45,9 @@ module Attrio
 
   protected
 
-    def as
-      self.options[:as]
-    end
+    # def as
+    #   self.options[:as]
+    # end
 
     def fetch_type(name)
       return if name.nil?
