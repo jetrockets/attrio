@@ -7,7 +7,7 @@ module Attrio
     autoload :Clonable, 'attrio/default_value/clonable'
     autoload :Symbol, 'attrio/default_value/symbol'
 
-    class << self      
+    class << self
       def new(attribute, value)
         Attrio::DefaultValue::Base.handle(attribute, value) || value
       end

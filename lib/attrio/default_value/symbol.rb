@@ -13,10 +13,10 @@ module Attrio
       # Symbol value is returned if the object doesn't respond to value
       #
       # @param [Object] instance
-      #      
+      #
       def call(instance)
         instance.respond_to?(self.value, true) ? instance.send(self.value) : self.value
-      end     
+      end
     end
   end
 end

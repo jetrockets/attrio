@@ -2,21 +2,20 @@
 
 module Attrio
   module Initialize
-    def self.included(base)
-      base.send(:extend, Attrio::Initialize::ClassMethods)
-    end
+    def new(*args, &block)
+      obj = self.allocate
 
-    module ClassMethods
-      def define_attrio_new(as)
-        class_eval(<<-EOS, __FILE__, __LINE__ + 1)
-          def self.new(*args, &block)
-            obj = self.allocate            
-            obj.send :initialize, *args, &block          
-            obj.send "set_#{as}_defaults"
-            obj
-          end
-        EOS
+      obj.class.attrio.each do |group, options|
+        obj.instance_variable_set("@#{group}", {})
+        obj.class.send("#{group}").each do |name, attribute|
+          obj.send("#{group}")[name] = attribute.dup
+          obj.send("#{group}")[name].instance_variable_set(:@object, obj)
+          obj.send("#{group}")[name].reset!
+        end
       end
+
+      obj.send :initialize, *args, &block
+      obj
     end
   end
 end

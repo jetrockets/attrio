@@ -19,10 +19,10 @@ module Attrio
       # Evaluates the value via value#clone
       #
       # @return [Object] evaluated value
-      #        
+      #
       def call(*)
         @value.clone
-      end 
+      end
     end
   end
 end

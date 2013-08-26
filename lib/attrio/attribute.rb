@@ -2,7 +2,7 @@
 
 module Attrio
   class Attribute
-    attr_reader :name, :type, :options
+    attr_reader :name, :type, :options, :object
 
     def initialize(name, type, options)
       @name = name; @type = type; @options = Helpers.symbolize_hash_keys(options)
@@ -33,6 +33,20 @@ module Attrio
         @default_value = Attrio::DefaultValue.new(self.name, self.options[:default])
       end
       @default_value
+    end
+
+    def reset!
+      raise ArgumentError if self.object.nil?
+
+      value = self.default_value.is_a?(Attrio::DefaultValue::Base) ? self.default_value.call(self.object) : self.default_value
+      self.object.send(self.writer_method_name, value)
+    end
+
+    def default?
+      raise ArgumentError if self.object.nil?
+
+      value = self.default_value.is_a?(Attrio::DefaultValue::Base) ? self.default_value.call(self.object) : self.default_value
+      self.object.send(self.reader_method_name) == value
     end
 
     def define_writer(klass)
