@@ -13,7 +13,7 @@ module Attrio
 
             array.map! do |item|
               if type.respond_to?(:typecast) && type.respond_to?(:typecasted?)
-                type.typecasted?(item) ? item : type.typecast(*[item, options])
+                type.typecasted?(item) ? item : type.typecast(item, options)
               else
                 type == Hash && item.is_a?(Hash) ? value : type.new(item)
               end
@@ -39,7 +39,7 @@ module Attrio
       end
 
       def self.element_options(element)
-        element[:options]
+        element[:options] || {}
       rescue
         {}
       end

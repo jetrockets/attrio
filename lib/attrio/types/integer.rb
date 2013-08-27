@@ -5,7 +5,7 @@ module Attrio
     class Integer < Base
       def self.typecast(value, options = {})
         options[:base] ||= 10
-        
+
         begin
           return value.to_i(options[:base]) if value.is_a?(String)
           return value.to_i
