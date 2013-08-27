@@ -4,10 +4,10 @@ module Attrio
   module Types
     class Integer < Base
       def self.typecast(value, options = {})
-        options[:base] ||= 10
+        base = options.is_a?(Hash) && options[:base] ? options[:base] : 10
         
         begin
-          return value.to_i(options[:base]) if value.is_a?(String)
+          return value.to_i(base) if value.is_a?(String)
           return value.to_i
         rescue NoMethodError => e
           nil
