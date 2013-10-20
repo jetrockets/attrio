@@ -83,6 +83,7 @@ module Attrio
     autoload :DateTime, 'attrio/types/date_time'
     autoload :Float, 'attrio/types/float'
     autoload :Integer, 'attrio/types/integer'
+    autoload :Set, 'attrio/types/set'
     autoload :Symbol, 'attrio/types/symbol'
     autoload :Time, 'attrio/types/time'
   end
