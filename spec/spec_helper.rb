@@ -6,7 +6,7 @@ $:.unshift File.expand_path('../../lib', __FILE__)
 require 'attrio'
 require 'rspec'
 require 'webmock/rspec'
-
+require 'json'
 require 'coveralls'
 Coveralls.wear!
 

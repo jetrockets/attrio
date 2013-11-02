@@ -19,9 +19,9 @@ module Attrio
         @attribute = attribute; @value = value;
       end
 
-      # Evaluates the value      
+      # Evaluates the value
       # @return [Object] evaluated value
-      #      
+      #
       def call(instance)
         raise NotImplementedError
       end

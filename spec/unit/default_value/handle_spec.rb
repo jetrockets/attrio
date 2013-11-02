@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Attrio::DefaultValue::Base, '.handle' do
-  subject { described_class.handle(mock('attribute'), default) }
+  subject { described_class.handle(double('attribute'), default) }
 
   context 'when default is a symbol' do
     let(:default) { :symbol }

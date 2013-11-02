@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Attrio do  
+describe Attrio do
   let(:model) do
     attributes_name = self.respond_to?(:attributes_name) ? self.attributes_name : 'attributes'
-    
-    Class.new do 
+
+    Class.new do
       include Attrio
 
       define_attributes :as => attributes_name do
@@ -28,7 +28,7 @@ describe Attrio do
       it { should respond_to(:reset_attributes) }
       it { should respond_to(:attributes) }
 
-      context '#attributes' do      
+      context '#attributes' do
         it 'should be a kind of Hash' do
           subject.attributes.should be_a_kind_of Hash
         end
@@ -46,7 +46,7 @@ describe Attrio do
           subject.attributes([:name]).keys.should match_array([:name])
         end
 
-        it 'should return a blank set of attributes for not existing filter' do          
+        it 'should return a blank set of attributes for not existing filter' do
           subject.attributes([:not_existing_attribute]).keys.should match_array([])
         end
       end
