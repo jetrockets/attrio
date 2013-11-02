@@ -2,7 +2,7 @@
 
 class Object
   def blank?
-    !self     
+    !self
   end unless method_defined? :blank?
 
   def present?

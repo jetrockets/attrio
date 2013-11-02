@@ -7,18 +7,18 @@ describe Attrio::DefaultValue::Clonable do
     Class.new do
       include Attrio
 
-      define_attributes do        
-        attr :attribute, Date, :default => Date.today        
-      end      
+      define_attributes do
+        attr :attribute, Date, :default => Date.today
+      end
     end
   end
 
   let(:object){ model.new }
 
-  let(:attribute){ mock('attribute')}
-  let(:default_value){ mock('default_value')}
-  let(:instance)  { mock('instance') }
-  let(:clone)     { mock('clone') }
+  let(:attribute){ double('attribute')}
+  let(:default_value){ double('default_value')}
+  let(:instance)  { double('instance') }
+  let(:clone)     { double('clone') }
 
   before { default_value.stub(:clone => clone) }
 
@@ -32,7 +32,7 @@ describe Attrio::DefaultValue::Clonable do
   end
 
   it "should set attribute value to appropriate type" do
-    object.attribute.should be_instance_of(Date)  
+    object.attribute.should be_instance_of(Date)
   end
 
   it "should not be equal to clonable object" do
@@ -41,5 +41,5 @@ describe Attrio::DefaultValue::Clonable do
 
   it "should have the same value as clonable object" do
     object.attribute.should == Date.today
-  end  
+  end
 end

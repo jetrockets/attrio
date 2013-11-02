@@ -20,6 +20,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rspec'
   gem.add_development_dependency 'webmock', '~> 1.9.0'
   gem.add_development_dependency 'simplecov'
+  gem.add_development_dependency 'json'
   gem.add_development_dependency 'coveralls'
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'bundler'

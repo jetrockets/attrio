@@ -1,18 +1,18 @@
 require 'spec_helper'
 
-describe 'Attributes inheritance' do  
+describe 'Attributes inheritance' do
   before(:all) do
     class Parent
       include Attrio
 
       define_attributes do
         attr :email, String
-        attr :name, String    
+        attr :name, String
         attr :created_at, DateTime, :default => proc{ Time.now }
       end
     end
 
-    class ChildWithoutAttributes < Parent      
+    class ChildWithoutAttributes < Parent
     end
 
     class ChildWithNewAttributes < Parent
