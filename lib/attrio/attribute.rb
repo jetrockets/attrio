@@ -21,7 +21,7 @@ module Attrio
     end
 
     def writer_visibility
-      @writer_visibility ||= self.accessor_name_from_options(:writer) || :public
+      @writer_visibility ||= self.accessor_visibility_from_options(:writer) || :public
     end
 
     def instance_variable_name
