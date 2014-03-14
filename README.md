@@ -29,7 +29,7 @@ Include Attrio into your class and then use `#define_attributes` block to declar
 ```ruby
 class User
   include Attrio
-	
+
   define_attributes do
   	attr :name, String
     attr :age, Integer
@@ -46,10 +46,10 @@ By default Attrio defines `#attributes` accessor which contains `Hash` with attr
  * reader method visibility
  * instance variable name
  * additional options
- 
+
 ```ruby
 user = User.new
-user.attributes 
+user.attributes
 # => {
 #	:name => #<Attrio::Attribute:0x007fc44e8ca680 @object=#<User:0x007fc44e8b2b48>, @name="name", @type=String, @options={}, @writer_method_name="name=", @writer_visibility=:public, @instance_variable_name="@name", @reader_method_name="name", @reader_visibility=:public>,
 #	:age => #<Attrio::Attribute:0x007fc44e8d4c98 @object=#<User:0x007fc44e8b2b48>, @name="age", @type=Attrio::Types::Integer, @options={}, @writer_method_name="age=", @writer_visibility=:public, @instance_variable_name="@age", @reader_method_name="age", @reader_visibility=:public>,
@@ -71,17 +71,17 @@ Accessor name can be easily overridden by passing `:as` option to `define_attrib
 ```ruby
 class User
   include Attrio
-	
+
   define_attributes :as => 'api_attributes' do
   	attr :name, String
     attr :age, Integer
     attr :birthday, DateTime
   end
-  
+
   define_attributes :as => 'settings' do
     attr :receives_notifications, Boolean, :default => true
   end
-  
+
 end
 ```
 
@@ -113,7 +113,7 @@ class Page
     # default from a method name as symbol
     attr :editor_title, String,  :default => :default_editor_title
   end
-  
+
   def initialize(attributes = {})
     self.attributes = attributes
   end
@@ -129,7 +129,7 @@ class Page
       title
     else
       title.present? ? "UNPUBLISHED: #{title}" : "UNPUBLISHED"
-    end    
+    end
   end
 end
 ```
@@ -142,7 +142,7 @@ p = Page.new
 p.attributes[:editor_title].default?
 => true
 p.editor_title = 'PUBLISHED'
-=> "PUBLISHED" 
+=> "PUBLISHED"
 p.attributes[:editor_title].default?
 => false
 ```
@@ -163,7 +163,7 @@ module MassAssignment
   end
 end
 
-class City  
+class City
   include Attrio
   include MassAssignment
 
@@ -204,12 +204,12 @@ user.address.city.name
 
 ### Methods visibility
 
-Don't want your accessors to be public? Visibility can be overridden easily. 
+Don't want your accessors to be public? Visibility can be overridden easily.
 
 ```ruby
 class User
   include Attrio
-	
+
   define_attributes do
   	attr :name, String, :writer => :protected
     attr :secret_rating, Integer, :reader => :private
@@ -224,8 +224,8 @@ Any Ruby class can be passed as type to Attrio. If this class responds to `typec
 ```ruby
 class Klass
   include Attrio
-	
-  define_attributes do  	
+
+  define_attributes do
   	attr :custom_attribute, CustomClass
   end
 end
@@ -240,10 +240,10 @@ By default boolean typecasts 'yes', '1', 1, 'true' as `TrueClass` and all other 
 ```ruby
 class Klass
   include Attrio
-	
+
   define_attributes do
   	attr :boolean_attribute, Boolean
-  	
+
   	attr :custom_boolean_attribute, Boolean, :yes => ['ja', '1', 1]
   	# attr :custom_boolean_attribute, Boolean, :yes_values => ['ja', '1', 1]
   	# attr :custom_boolean_attribute, Boolean, :no => ['nein', '0', 0]
@@ -259,12 +259,12 @@ These three class have similar behaviour and options. By passing `:format` optio
 ```ruby
 class Klass
   include Attrio
-	
+
   define_attributes do
   	attr :date_attribute, Date
   	attr :time_attribute, Time
   	attr :date_time_attribute, DateTime
-  	
+
 	attr :custom_date_time_attribute, DateTime, :format => '%m/%d/%y-%H:%M:%S-%z'
   end
 end
@@ -277,7 +277,7 @@ Attribute will be typecasted using `to_f` method.
 ```ruby
 class Klass
   include Attrio
-	
+
   define_attributes do
   	attr :float_attribute, Float
   end
@@ -293,7 +293,7 @@ Optional `:base` parameter can be passed, during the typecast attribute will be 
 ```ruby
 class Klass
   include Attrio
-	
+
   define_attributes do
   	attr :integer_attribute, Integer
   	attr :custom_integer_attribute, Integer, :base => 2
@@ -305,12 +305,12 @@ end
 
 Attribute will be typecasted using `to_sym` method.
 
-If Optional `:underscore` parameter is passed, then attribute value will be downcased and underscored before calling `to_sym`. 
+If Optional `:underscore` parameter is passed, then attribute value will be downcased and underscored before calling `to_sym`.
 
 ```ruby
 class Klass
   include Attrio
-	
+
   define_attributes do
   	attr :symbol_attribute, Symbol
   	attr :custom_symbol_attribute, Symbol, :underscore => true
@@ -341,7 +341,7 @@ Attrio adds its own `#inspect` method when included to the class. This overridde
 ```ruby
 class Klass
   include Attrio
-	
+
   define_attributes :inspect => false do
   	attr :attribute, String
   end
@@ -369,6 +369,7 @@ Contributors:
 
 * [Igor Alexandrov](http://igor-alexandrov.github.com/)
 * [Julia Egorova](https://github.com/vankiru)
+* [Dmitry Radionov](https://github.com/Gikls)
 
 ## License
 
