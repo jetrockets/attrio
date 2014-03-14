@@ -361,7 +361,7 @@ end
 
 ## Credits
 
-![JetRockets](http://www.jetrockets.ru/public/logo.png)
+![JetRockets](http://www.jetrockets.ru/jetrockets.png)
 
 Webmaster is maintained by [JetRockets](http://www.jetrockets.ru/en).
 
