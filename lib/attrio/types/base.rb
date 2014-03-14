@@ -9,7 +9,7 @@ module Attrio
         raise NotImplementedError
       end
 
-      def self.typecasted?(value)
+      def self.typecasted?(value, options = {})
         false
       end
 
