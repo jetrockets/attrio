@@ -25,7 +25,7 @@ module Attrio
         klass.send :define_method, options[:method_name] do |value|
           if !value.nil?
             value = if type.respond_to?(:typecast) && type.respond_to?(:typecasted?)
-              type.typecasted?(value) ? value : type.typecast(*[value, options])
+              type.typecasted?(value,options) ? value : type.typecast(*[value, options])
             else
               type == Hash && value.is_a?(Hash) ? value : type.new(value)
             end

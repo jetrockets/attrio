@@ -26,7 +26,7 @@ module Attrio
         end
       end
 
-      def self.typecasted?(value)
+      def self.typecasted?(value, options = {})
         value.is_a? ::Set
       end
     end
