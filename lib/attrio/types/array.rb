@@ -5,8 +5,7 @@ module Attrio
     class Array < Base
       def self.typecast(value, options = {})
         begin
-          array = !value.is_a?(Array) && value.respond_to?(:split) ? value.split(options[:split]) : Attrio::Helpers.to_a(value)
-          array.flatten!
+          array = (!value.is_a?(Array) && value.respond_to?(:split)) ? value.split(options[:split]) : Attrio::Helpers.to_a(value).flatten!
           if options[:element].present?
             type = Attrio::AttributesParser.cast_type(self.element_type(options[:element]))
             options = self.element_options(options[:element])
