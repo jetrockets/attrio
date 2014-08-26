@@ -17,8 +17,8 @@ describe Attrio::Types::Array do
     context 'with not typecasted assignment' do
       it 'should cast space separated string' do
         object.array_attribute = 'first second third'
-        object.array_attribute.should be_instance_of(Array)
-        object.array_attribute.should == %w(first second third)
+        expect(object.array_attribute).to be_instance_of(Array)
+        expect(object.array_attribute).to eq(%w(first second third))
       end
     end
 
@@ -27,8 +27,8 @@ describe Attrio::Types::Array do
         array = %w(first second third)
 
         object.array_attribute = array
-        object.array_attribute.should be_instance_of(Array)
-        object.array_attribute.should be_equal(array)
+        expect(object.array_attribute).to be_instance_of(Array)
+        expect(object.array_attribute).to be_equal(array)
       end
     end
   end
@@ -52,8 +52,8 @@ describe Attrio::Types::Array do
         string = dates.map{ |date| date.strftime('%m/%d/%y') }.join(', ')
 
         object.array_attribute = string
-        object.array_attribute.should be_instance_of(Array)
-        object.array_attribute.should == dates
+        expect(object.array_attribute).to be_instance_of(Array)
+        expect(object.array_attribute).to eq(dates)
       end
     end
   end

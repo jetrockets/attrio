@@ -20,26 +20,26 @@ describe Attrio::DefaultValue::Clonable do
   let(:instance)  { double('instance') }
   let(:clone)     { double('clone') }
 
-  before { default_value.stub(:clone => clone) }
+  before { allow(default_value).to receive_messages(:clone => clone) }
 
   it 'should clone the value' do
-    default_value.should_receive(:clone).with(no_args)
+    expect(default_value).to receive(:clone).with(no_args)
     subject.call(instance)
   end
 
   it 'should be an instance of a cloned value' do
-    subject.call(instance).should be(clone)
+    expect(subject.call(instance)).to be(clone)
   end
 
   it "should set attribute value to appropriate type" do
-    object.attribute.should be_instance_of(Date)
+    expect(object.attribute).to be_instance_of(Date)
   end
 
   it "should not be equal to clonable object" do
-    object.attribute.should_not be_equal(Date.today)
+    expect(object.attribute).not_to be_equal(Date.today)
   end
 
   it "should have the same value as clonable object" do
-    object.attribute.should == Date.today
+    expect(object.attribute).to eq(Date.today)
   end
 end

@@ -19,7 +19,8 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
 
   gem.add_development_dependency 'rspec'
-  gem.add_development_dependency 'webmock', '~> 1.9.0'
+  gem.add_development_dependency 'rspec-its'
+  gem.add_development_dependency 'webmock', '~> 1.9'
   gem.add_development_dependency 'simplecov'
   gem.add_development_dependency 'json'
   gem.add_development_dependency 'coveralls'

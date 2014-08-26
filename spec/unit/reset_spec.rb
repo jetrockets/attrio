@@ -20,16 +20,16 @@ describe Attrio::Reset do
   end
 
   it 'should respond_to reset_attributes' do
-    object.respond_to?(:reset_attributes).should be_true
+    expect(object.respond_to?(:reset_attributes)).to be_truthy
   end
 
   it 'should reset attributes without :default option to nil' do
     object.reset_attributes
-    object.first.should be_nil
+    expect(object.first).to be_nil
   end
 
   it 'should reset attributes with :default option to default value' do
     object.reset_attributes
-    object.second.should == 'default'
+    expect(object.second).to eq('default')
   end
 end

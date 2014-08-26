@@ -19,8 +19,8 @@ describe Attrio::Types::Date do
         today = Date.today
 
         object.date_attribute = today.to_s
-        object.date_attribute.should be_instance_of(Date)
-        object.date_attribute.should == today
+        expect(object.date_attribute).to be_instance_of(Date)
+        expect(object.date_attribute).to eq(today)
       end
     end
 
@@ -29,8 +29,8 @@ describe Attrio::Types::Date do
         today = Date.today
 
         object.date_attribute = today
-        object.date_attribute.should be_instance_of(Date)
-        object.date_attribute.should be_equal(today)
+        expect(object.date_attribute).to be_instance_of(Date)
+        expect(object.date_attribute).to be_equal(today)
       end
     end
   end
@@ -53,17 +53,17 @@ describe Attrio::Types::Date do
         today = Date.today
 
         object.date_attribute = today.strftime('%m/%d/%y')
-        object.date_attribute.should be_instance_of(Date)
-        object.date_attribute.should == today
+        expect(object.date_attribute).to be_instance_of(Date)
+        expect(object.date_attribute).to eq(today)
       end
 
       it 'should not cast <String> with invalid format' do
         today = Date.today
 
-        lambda {
+        expect {
           object.date_attribute = today.strftime('%d-%m-%Y')
-        }.should_not raise_exception
-        object.date_attribute.should be_nil
+        }.not_to raise_exception
+        expect(object.date_attribute).to be_nil
       end
     end
 
@@ -72,8 +72,8 @@ describe Attrio::Types::Date do
         today = Date.today
 
         object.date_attribute = today
-        object.date_attribute.should be_instance_of(Date)
-        object.date_attribute.should be_equal(today)
+        expect(object.date_attribute).to be_instance_of(Date)
+        expect(object.date_attribute).to be_equal(today)
       end
     end
   end

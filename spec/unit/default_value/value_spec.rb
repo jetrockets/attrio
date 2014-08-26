@@ -24,17 +24,17 @@ describe Attrio::DefaultValue do
   
   context 'default value is not set' do
     it "should set attribute to nil" do
-      object.attribute_without_default_value.should be_nil
+      expect(object.attribute_without_default_value).to be_nil
     end
   end
 
   context 'default value is set as a not clonable object' do
     it "should set attribute value to appropriate type" do
-      object.attribute_with_default_value.should be_instance_of(Fixnum)
+      expect(object.attribute_with_default_value).to be_instance_of(Fixnum)
     end
 
     it "should be equal to attribute value" do
-      object.attribute_with_default_value.should be_equal(1)
+      expect(object.attribute_with_default_value).to be_equal(1)
     end
   end
 

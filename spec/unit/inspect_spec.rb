@@ -14,7 +14,7 @@ describe Attrio::Inspect do
     let(:object) { model.new }
 
     it 'should have inspect defined by attrio' do
-      object.method(:inspect).source_location.first.should match(/lib\/attrio\/inspect.rb/)
+      expect(object.method(:inspect).source_location.first).to match(/lib\/attrio\/inspect.rb/)
     end
   end
 end
