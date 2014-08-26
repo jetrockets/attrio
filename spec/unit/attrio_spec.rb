@@ -73,4 +73,45 @@ describe Attrio do
       its(:api_attributes){ should be_present }
     end
   end
+
+  describe 'includeing MassAssignment' do
+    module MassAssignment
+      def initialize(attributes = {})
+        self.attributes = attributes
+      end
+
+      def attributes=(attributes = {})
+        attributes.each do |attr,value|
+          self.send("#{attr}=", value) if self.respond_to?("#{attr}=")
+        end
+      end
+    end
+
+    let(:model) do
+      Class.new do
+        include Attrio
+        include MassAssignment
+
+        define_attributes do
+          attr :name, String
+          attr :age, Integer
+          attr :activated, Boolean
+        end
+      end
+    end
+
+    context "initialize with attributes" do
+      subject do
+        model.new(
+          name: "name",
+          age: 0,
+          activated: false,
+        )
+      end
+
+      it { expect(subject.name).to eq "name" }
+      it { expect(subject.age).to eq 0 }
+      it { expect(subject.activated).to eq false }
+    end
+  end
 end
