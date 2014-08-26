@@ -52,8 +52,8 @@ describe 'Embedded Value' do
   it 'should allow to pass a hash for the embedded value' do
     user = User.new
     user.address = address_attributes
-    user.address.street.should == 'Sklizkova 6A'
-    user.address.zipcode.should == '170000'
-    user.address.city.name.should == 'Tver'
+    expect(user.address.street).to eq('Sklizkova 6A')
+    expect(user.address.zipcode).to eq('170000')
+    expect(user.address.city.name).to eq('Tver')
   end
 end

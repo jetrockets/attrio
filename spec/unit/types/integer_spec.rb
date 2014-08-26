@@ -17,21 +17,21 @@ describe Attrio::Types::Integer do
     context 'with not typecasted assignment' do
       it 'should cast an object which has method to_i' do
         object.integer_attribute = "10 test"
-        object.integer_attribute.should == 10
+        expect(object.integer_attribute).to eq(10)
       end
 
       it 'should not cast an object which has not method to_i' do
-        lambda {
+        expect {
           object.integer_attribute = []
-        }.should_not raise_exception
-        object.integer_attribute.should be_nil
+        }.not_to raise_exception
+        expect(object.integer_attribute).to be_nil
       end
     end
 
     context 'with typecasted assignment' do
       it 'should assign <Integer>' do
         object.integer_attribute = 10
-        object.integer_attribute.should == 10
+        expect(object.integer_attribute).to eq(10)
       end
     end
   end
@@ -52,26 +52,26 @@ describe Attrio::Types::Integer do
     context 'with not typecasted assignment' do
       it 'should cast <String> considering :base option' do
         object.integer_attribute = "A"
-        object.integer_attribute.should == 10
+        expect(object.integer_attribute).to eq(10)
       end
 
       it 'should cast an object which has method to_i' do
         object.integer_attribute = 10.0
-        object.integer_attribute.should == 10
+        expect(object.integer_attribute).to eq(10)
       end
 
       it 'should not cast an object which has not method to_i' do
-        lambda {
+        expect {
           object.integer_attribute = []
-        }.should_not raise_exception
-        object.integer_attribute.should be_nil
+        }.not_to raise_exception
+        expect(object.integer_attribute).to be_nil
       end
     end
 
     context 'with typecasted assignment' do
       it 'should assign <Integer>' do
         object.integer_attribute = 10
-        object.integer_attribute.should == 10
+        expect(object.integer_attribute).to eq(10)
       end
     end
   end

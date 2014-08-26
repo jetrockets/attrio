@@ -19,8 +19,8 @@ describe Attrio::Types::DateTime do
         now = Time.at(Time.now.to_i).send :to_datetime
 
         object.datetime_attribute = now.to_s
-        object.datetime_attribute.should be_instance_of(DateTime)
-        object.datetime_attribute.should == now
+        expect(object.datetime_attribute).to be_instance_of(DateTime)
+        expect(object.datetime_attribute).to eq(now)
       end
     end
 
@@ -29,8 +29,8 @@ describe Attrio::Types::DateTime do
         now = DateTime.now
 
         object.datetime_attribute = now
-        object.datetime_attribute.should be_instance_of(DateTime)
-        object.datetime_attribute.should be_equal(now)
+        expect(object.datetime_attribute).to be_instance_of(DateTime)
+        expect(object.datetime_attribute).to be_equal(now)
       end
     end
   end
@@ -53,17 +53,17 @@ describe Attrio::Types::DateTime do
         now = Time.at(Time.now.to_i).send :to_datetime
 
         object.datetime_attribute = now.strftime('%m/%d/%y-%H:%M:%S-%z')
-        object.datetime_attribute.should be_instance_of(DateTime)
-        object.datetime_attribute.should == now
+        expect(object.datetime_attribute).to be_instance_of(DateTime)
+        expect(object.datetime_attribute).to eq(now)
       end
 
       it 'should not cast <String> with invalid format' do
         now = DateTime.now
 
-        lambda {
+        expect {
           object.datetime_attribute = now.strftime('%H:%M:%S-%m/%d/%y')
-        }.should_not raise_exception
-        object.datetime_attribute.should be_nil
+        }.not_to raise_exception
+        expect(object.datetime_attribute).to be_nil
       end
     end
 
@@ -72,8 +72,8 @@ describe Attrio::Types::DateTime do
         now = DateTime.now
 
         object.datetime_attribute = now
-        object.datetime_attribute.should be_instance_of(DateTime)
-        object.datetime_attribute.should be_equal(now)
+        expect(object.datetime_attribute).to be_instance_of(DateTime)
+        expect(object.datetime_attribute).to be_equal(now)
       end
     end
   end

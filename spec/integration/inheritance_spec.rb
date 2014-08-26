@@ -33,7 +33,7 @@ describe 'Attributes inheritance' do
       subject { ChildWithoutAttributes.attributes }
 
       it "should equal to parent's attributes" do
-        should == Parent.attributes
+        is_expected.to eq(Parent.attributes)
       end
     end
 
@@ -41,7 +41,7 @@ describe 'Attributes inheritance' do
       subject { ChildWithNewAttributes.attributes }
 
       it "should include parent's attributes" do
-        should include(Parent.attributes)
+        is_expected.to include(Parent.attributes)
       end
     end
 
@@ -49,15 +49,15 @@ describe 'Attributes inheritance' do
       subject { ChildWithOverridenAttributes.attributes }
 
       it "should include not overriden attributes" do
-        should include(Parent.attributes.reject { |k| k == :name })
+        is_expected.to include(Parent.attributes.reject { |k| k == :name })
       end
 
       it "should include overriden attributes" do
-        should include(:name)
+        is_expected.to include(:name)
       end
 
       it "should include overriden attributes with corect options" do
-        subject[:name].type.should == Attrio::Types::Symbol
+        expect(subject[:name].type).to eq(Attrio::Types::Symbol)
       end
     end
   end

@@ -19,8 +19,8 @@ describe Attrio::Types::Time do
         now = Time.at(Time.now.to_i)
 
         object.time_attribute = now.to_s
-        object.time_attribute.should be_instance_of(Time)
-        object.time_attribute.should == now
+        expect(object.time_attribute).to be_instance_of(Time)
+        expect(object.time_attribute).to eq(now)
       end
     end
 
@@ -29,8 +29,8 @@ describe Attrio::Types::Time do
         now = Time.now
 
         object.time_attribute = now
-        object.time_attribute.should be_instance_of(Time)
-        object.time_attribute.should be_equal(now)
+        expect(object.time_attribute).to be_instance_of(Time)
+        expect(object.time_attribute).to be_equal(now)
       end
     end
   end
@@ -53,17 +53,17 @@ describe Attrio::Types::Time do
         now = Time.at(Time.now.to_i)
 
         object.time_attribute = now.strftime('%m/%d/%y-%H:%M:%S')
-        object.time_attribute.should be_instance_of(Time)
-        object.time_attribute.should == now
+        expect(object.time_attribute).to be_instance_of(Time)
+        expect(object.time_attribute).to eq(now)
       end
 
       it 'should not cast <String> with invalid format' do
         now = Time.now
 
-        lambda {
+        expect {
           object.time_attribute = now.strftime('%H:%M:%S-%m/%d/%y')
-        }.should_not raise_exception
-        object.time_attribute.should be_nil
+        }.not_to raise_exception
+        expect(object.time_attribute).to be_nil
       end
     end
 
@@ -72,8 +72,8 @@ describe Attrio::Types::Time do
         now = Time.now
 
         object.time_attribute = now
-        object.time_attribute.should be_instance_of(Time)
-        object.time_attribute.should be_equal(now)
+        expect(object.time_attribute).to be_instance_of(Time)
+        expect(object.time_attribute).to be_equal(now)
       end
     end
   end

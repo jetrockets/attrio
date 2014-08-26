@@ -19,19 +19,19 @@ describe Attrio::DefaultValue::Callable do
   let(:default_value){ double('default_value')}
   let(:response)  { double('response') }
 
-  before { default_value.stub(:call => response) }
+  before { allow(default_value).to receive_messages(:call => response) }
   it 'should call the value with the object and attribute' do
-    default_value.should_receive(:call).with(object, attribute).and_return(response)
+    expect(default_value).to receive(:call).with(object, attribute).and_return(response)
     subject.call(object)
   end
 
   it "should set attribute value to appropriate type" do
-    object.attribute.should be_instance_of(DateTime)
+    expect(object.attribute).to be_instance_of(DateTime)
   end
 
   it "should be evaluate attribute value every time" do
     another_object = model.new
 
-    object.attribute.should_not be_equal(another_object.attribute)
+    expect(object.attribute).not_to be_equal(another_object.attribute)
   end
 end

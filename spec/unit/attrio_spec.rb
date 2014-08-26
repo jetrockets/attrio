@@ -18,36 +18,36 @@ describe Attrio do
   context 'Attrio included with default parameters' do
     subject { model }
 
-    it { should respond_to(:define_attributes) }
-    it { should respond_to(:attributes) }
+    it { is_expected.to respond_to(:define_attributes) }
+    it { is_expected.to respond_to(:attributes) }
 
     context 'instance' do
       subject { model.new }
 
-      it { should be }
-      it { should respond_to(:reset_attributes) }
-      it { should respond_to(:attributes) }
+      it { is_expected.to be }
+      it { is_expected.to respond_to(:reset_attributes) }
+      it { is_expected.to respond_to(:attributes) }
 
       context '#attributes' do
         it 'should be a kind of Hash' do
-          subject.attributes.should be_a_kind_of Hash
+          expect(subject.attributes).to be_a_kind_of Hash
         end
 
         it 'should be present' do
-          subject.attributes.should be_present
+          expect(subject.attributes).to be_present
         end
 
         it 'should return a full set of attributes' do
-          subject.attributes.keys.should match_array([:name, :age, :created_at])
+          expect(subject.attributes.keys).to match_array([:name, :age, :created_at])
         end
 
         it 'should return a filtered set of attributes' do
-          subject.attributes(:name).keys.should match_array([:name])
-          subject.attributes([:name]).keys.should match_array([:name])
+          expect(subject.attributes(:name).keys).to match_array([:name])
+          expect(subject.attributes([:name]).keys).to match_array([:name])
         end
 
         it 'should return a blank set of attributes for not existing filter' do
-          subject.attributes([:not_existing_attribute]).keys.should match_array([])
+          expect(subject.attributes([:not_existing_attribute]).keys).to match_array([])
         end
       end
     end
@@ -60,15 +60,15 @@ describe Attrio do
 
     subject { model }
 
-    it { should respond_to(:define_attributes) }
-    it { should respond_to(:api_attributes) }
+    it { is_expected.to respond_to(:define_attributes) }
+    it { is_expected.to respond_to(:api_attributes) }
 
     context 'instance' do
       subject { model.new }
 
-      it { should be }
-      it { should respond_to(:reset_api_attributes) }
-      it { should respond_to(:api_attributes) }
+      it { is_expected.to be }
+      it { is_expected.to respond_to(:reset_api_attributes) }
+      it { is_expected.to respond_to(:api_attributes) }
 
       its(:api_attributes){ should be_present }
     end

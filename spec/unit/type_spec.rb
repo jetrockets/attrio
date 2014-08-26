@@ -17,6 +17,6 @@ describe Attrio::Types::Base do
   end
 
   it 'should set appropriate type by all available options ' do
-    model.attributes.values.each { |attribute| attribute.type.should be(Attrio::Types::Integer) }
+    model.attributes.values.each { |attribute| expect(attribute.type).to be(Attrio::Types::Integer) }
   end
 end

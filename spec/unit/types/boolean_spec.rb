@@ -17,54 +17,54 @@ describe Attrio::Types::Boolean do
     context 'with not typecasted assignment' do
       it 'should cast "true"' do
         object.boolean_attribute = 'true'
-        object.boolean_attribute?.should be_true
+        expect(object.boolean_attribute?).to be_truthy
       end
 
       it 'should cast "1"' do
         object.boolean_attribute = '1'
-        object.boolean_attribute?.should be_true
+        expect(object.boolean_attribute?).to be_truthy
       end
 
       it 'should cast 1' do
         object.boolean_attribute = 1
-        object.boolean_attribute?.should be_true
+        expect(object.boolean_attribute?).to be_truthy
       end
 
       it 'should cast "yes"' do
         object.boolean_attribute = 'yes'
-        object.boolean_attribute?.should be_true
+        expect(object.boolean_attribute?).to be_truthy
       end
 
       it 'should cast "false"' do
         object.boolean_attribute = 'false'
-        object.boolean_attribute?.should be_false
+        expect(object.boolean_attribute?).to be_falsey
       end
 
       it 'should cast "0"' do
         object.boolean_attribute = '0'
-        object.boolean_attribute?.should be_false
+        expect(object.boolean_attribute?).to be_falsey
       end
 
       it 'should cast 0' do
         object.boolean_attribute = 0
-        object.boolean_attribute?.should be_false
+        expect(object.boolean_attribute?).to be_falsey
       end
 
       it 'should cast "no"' do
         object.boolean_attribute = 'no'
-        object.boolean_attribute?.should be_false
+        expect(object.boolean_attribute?).to be_falsey
       end
     end
 
     context 'with typecasted assignment' do
       it 'should assign <TrueClass> and do not typecast' do
         object.boolean_attribute = true
-        object.boolean_attribute?.should be_true
+        expect(object.boolean_attribute?).to be_truthy
       end
 
       it 'should assign <FalseClass> and do not typecast' do
         object.boolean_attribute = false
-        object.boolean_attribute?.should be_false
+        expect(object.boolean_attribute?).to be_falsey
       end
     end
   end
@@ -84,18 +84,18 @@ describe Attrio::Types::Boolean do
 
     it 'should cast "yeah" as TrueClass' do
       object.boolean_attribute = 'yeah'
-      object.boolean_attribute?.should be_true
+      expect(object.boolean_attribute?).to be_truthy
     end
 
     it 'should cast anything else as FalseClass' do
       object.boolean_attribute = 'yes'
-      object.boolean_attribute?.should be_false
+      expect(object.boolean_attribute?).to be_falsey
 
       object.boolean_attribute = 1
-      object.boolean_attribute?.should be_false
+      expect(object.boolean_attribute?).to be_falsey
 
       object.boolean_attribute = 0
-      object.boolean_attribute?.should be_false
+      expect(object.boolean_attribute?).to be_falsey
     end
   end
 end
