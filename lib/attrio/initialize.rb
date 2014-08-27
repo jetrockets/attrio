@@ -22,7 +22,7 @@ module Attrio
     private
 
     def blank_attribute?(obj, attribute_name, attribute)
-      if attribute.type <= Attrio::Types::Boolean
+      if attribute.type && attribute.type <= Attrio::Types::Boolean
         obj.send(attribute_name).nil?
       else
         obj.send(attribute_name).blank?
